@@ -48,6 +48,9 @@ dependencies:
   carousel_slider: ^4.1.1
   cached_network_image: ^3.2.3
   formz: ^0.4.1
+  http: ^0.13.5
+  form_field_validator: ^1.1.0
+  flutter_secure_storage: ^7.0.1
 #  flutter_hooks: ^0.18.5+1
 #  hydrated_bloc: ^9.0.0
 

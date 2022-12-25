@@ -1,5 +1,8 @@
-import 'package:e_cm/pages/screen/mall/component/mall_header.dart';
+
 import 'package:flutter/material.dart';
+
+import '../../page/product_detail/component/product_detail_header.dart';
+import '../../widget/icon_search.dart';
 
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({Key? key}) : super(key: key);
@@ -15,6 +18,12 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
   Widget getBody() {
     return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.black,
+
+          actions:const [ProductDetailHeader()],
+          title: const IconSearch(color: Colors.white24),
+        ),
         body: Stack(
           children: [
             Stack(
@@ -27,7 +36,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                     Stack(
                       children: [
                         Column(
-                          children: [
+                          children: const [
                           ],
                         ),
 
@@ -37,7 +46,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 ),
               ],
             ),
-            const MallHeader(),
           ],
         ));
   }

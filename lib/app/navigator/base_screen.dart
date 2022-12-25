@@ -1,6 +1,7 @@
-import 'package:e_cm/pages/screen/home_screen/home_screen.dart';
+
 import 'package:e_cm/pages/screen/profile/profile.dart';
 import 'package:flutter/material.dart';
+import '../../pages/screen/home/home_screen.dart';
 import '../../pages/screen/mall/mall.dart';
 import '../../pages/screen/notification/notification.dart';
 import '../../pages/widget/item.dart';

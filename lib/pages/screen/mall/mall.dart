@@ -1,8 +1,8 @@
-import 'package:e_cm/pages/screen/home_screen/component/home_banner.dart';
-import 'package:e_cm/pages/screen/home_screen/component/home_product.dart';
+import 'package:e_cm/pages/page/product_detail/component/product_detail_header.dart';
+import 'package:e_cm/pages/widget/icon_search.dart';
 import 'package:flutter/material.dart';
-
-import 'component/mall_header.dart';
+import '../home/component/home_banner.dart';
+import '../home/component/home_product.dart';
 import 'component/mall_trademark.dart';
 
 class MallScreen extends StatefulWidget {
@@ -13,7 +13,6 @@ class MallScreen extends StatefulWidget {
 }
 
 class _MallScreenState extends State<MallScreen> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,29 +22,36 @@ class _MallScreenState extends State<MallScreen> {
 
   Widget getBody() {
     return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.black,
+          actions: const [ProductDetailHeader()],
+          title: const IconSearch(color: Colors.white24),
+        ),
         body: Stack(
-      children: [
-        Stack(
           children: [
-            ListView(
-              scrollDirection: Axis.vertical,
-              shrinkWrap: true,
-              padding: const EdgeInsets.all(0.0),
+            Stack(
               children: [
-                Stack(
+                ListView(
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  padding: const EdgeInsets.all(0.0),
                   children: [
-                    Column(
+                    Stack(
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 90),
-                          child: HomeBanner(),
+                        Column(
+                          children: [
+                            HomeBanner(),
+                            const MallTrademark(),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            const MallTrademark(),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            const HomeProduct(),
+                          ],
                         ),
-                        const MallTrademark(),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        const MallTrademark(),
-                        const HomeProduct(),
                       ],
                     ),
                   ],
@@ -53,9 +59,6 @@ class _MallScreenState extends State<MallScreen> {
               ],
             ),
           ],
-        ),
-        const MallHeader(),
-      ],
-    ));
+        ));
   }
 }

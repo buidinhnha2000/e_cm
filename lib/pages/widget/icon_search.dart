@@ -1,4 +1,5 @@
 
+import 'package:e_cm/app/navigator/router.dart';
 import 'package:flutter/material.dart';
 
 class IconSearch extends StatefulWidget {
@@ -11,6 +12,7 @@ class IconSearch extends StatefulWidget {
 }
 
 class _IconSearchState extends State<IconSearch> {
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -24,15 +26,20 @@ class _IconSearchState extends State<IconSearch> {
     const border = OutlineInputBorder(
         borderSide: BorderSide(
           color: Colors.white54,
-          width: 0,
+          width: 1,
         ),
         borderRadius: BorderRadius.all(
           Radius.circular(4.0),
-        ));
+        ),
+    );
+
     return Expanded(
       child: TextField(
         onTap: (){
+          Navigator.of(context).pushNamed(AppRoutes.search);
+
         },
+        focusNode: FocusScopeNode(),
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.all(4),
           enabledBorder: border,
@@ -41,19 +48,20 @@ class _IconSearchState extends State<IconSearch> {
           hintText: "Searching",
           hintStyle: const TextStyle(
             fontSize: 16,
-            color: Colors.red,
+            color: Colors.deepOrange,
           ),
           prefixIcon: const Icon(
             Icons.search,
-            color: Colors.white70,
+            color: Colors.white,
             size: 25,
           ),
           prefixIconConstraints: sizeIcon,
-          suffixIcon:
-          const Icon(Icons.camera_alt, color: Colors.white70, size: 25),
+          // suffixIcon:
+          // const Icon(Icons.camera_alt, color: Colors.white, size: 25),
           suffixIconConstraints: sizeIcon,
           filled: true,
           fillColor: widget.color,
+
         ),
       ),
     );

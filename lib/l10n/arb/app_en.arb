@@ -2,5 +2,8 @@
     "title": "E Commerce",
     "text_sale": "Flash Sale",
     "text_product": "Product Hot",
-    "text_login": "Login"
+    "text_login": "Login",
+    "text_product": "Product",
+    "text_cart": "Cart",
+    "text_trademark_hot": "Hot trademarks"
 }
