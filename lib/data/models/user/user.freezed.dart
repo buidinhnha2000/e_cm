@@ -21,12 +21,12 @@ User _$UserFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$User {
   @JsonKey(name: '_id')
-  String get idUser => throw _privateConstructorUsedError;
-  String get username => throw _privateConstructorUsedError;
-  String get password => throw _privateConstructorUsedError;
-  bool get isAdmin => throw _privateConstructorUsedError;
-  String get createdAt => throw _privateConstructorUsedError;
-  String get updatedAt => throw _privateConstructorUsedError;
+  String? get idUser => throw _privateConstructorUsedError;
+  String? get username => throw _privateConstructorUsedError;
+  String? get password => throw _privateConstructorUsedError;
+  bool? get isAdmin => throw _privateConstructorUsedError;
+  String? get createdAt => throw _privateConstructorUsedError;
+  String? get updatedAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -39,12 +39,12 @@ abstract class $UserCopyWith<$Res> {
       _$UserCopyWithImpl<$Res, User>;
   @useResult
   $Res call(
-      {@JsonKey(name: '_id') String idUser,
-      String username,
-      String password,
-      bool isAdmin,
-      String createdAt,
-      String updatedAt});
+      {@JsonKey(name: '_id') String? idUser,
+      String? username,
+      String? password,
+      bool? isAdmin,
+      String? createdAt,
+      String? updatedAt});
 }
 
 /// @nodoc
@@ -60,38 +60,38 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? idUser = null,
-    Object? username = null,
-    Object? password = null,
-    Object? isAdmin = null,
-    Object? createdAt = null,
-    Object? updatedAt = null,
+    Object? idUser = freezed,
+    Object? username = freezed,
+    Object? password = freezed,
+    Object? isAdmin = freezed,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
   }) {
     return _then(_value.copyWith(
-      idUser: null == idUser
+      idUser: freezed == idUser
           ? _value.idUser
           : idUser // ignore: cast_nullable_to_non_nullable
-              as String,
-      username: null == username
+              as String?,
+      username: freezed == username
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
-              as String,
-      password: null == password
+              as String?,
+      password: freezed == password
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
-              as String,
-      isAdmin: null == isAdmin
+              as String?,
+      isAdmin: freezed == isAdmin
           ? _value.isAdmin
           : isAdmin // ignore: cast_nullable_to_non_nullable
-              as bool,
-      createdAt: null == createdAt
+              as bool?,
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as String,
-      updatedAt: null == updatedAt
+              as String?,
+      updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ) as $Val);
   }
 }
@@ -103,12 +103,12 @@ abstract class _$$_UserCopyWith<$Res> implements $UserCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: '_id') String idUser,
-      String username,
-      String password,
-      bool isAdmin,
-      String createdAt,
-      String updatedAt});
+      {@JsonKey(name: '_id') String? idUser,
+      String? username,
+      String? password,
+      bool? isAdmin,
+      String? createdAt,
+      String? updatedAt});
 }
 
 /// @nodoc
@@ -120,38 +120,38 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? idUser = null,
-    Object? username = null,
-    Object? password = null,
-    Object? isAdmin = null,
-    Object? createdAt = null,
-    Object? updatedAt = null,
+    Object? idUser = freezed,
+    Object? username = freezed,
+    Object? password = freezed,
+    Object? isAdmin = freezed,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
   }) {
     return _then(_$_User(
-      idUser: null == idUser
+      idUser: freezed == idUser
           ? _value.idUser
           : idUser // ignore: cast_nullable_to_non_nullable
-              as String,
-      username: null == username
+              as String?,
+      username: freezed == username
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
-              as String,
-      password: null == password
+              as String?,
+      password: freezed == password
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
-              as String,
-      isAdmin: null == isAdmin
+              as String?,
+      isAdmin: freezed == isAdmin
           ? _value.isAdmin
           : isAdmin // ignore: cast_nullable_to_non_nullable
-              as bool,
-      createdAt: null == createdAt
+              as bool?,
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as String,
-      updatedAt: null == updatedAt
+              as String?,
+      updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -160,28 +160,28 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
 @JsonSerializable()
 class _$_User implements _User {
   const _$_User(
-      {@JsonKey(name: '_id') required this.idUser,
-      required this.username,
-      required this.password,
-      required this.isAdmin,
-      required this.createdAt,
-      required this.updatedAt});
+      {@JsonKey(name: '_id') this.idUser,
+      this.username,
+      this.password,
+      this.isAdmin,
+      this.createdAt,
+      this.updatedAt});
 
   factory _$_User.fromJson(Map<String, dynamic> json) => _$$_UserFromJson(json);
 
   @override
   @JsonKey(name: '_id')
-  final String idUser;
+  final String? idUser;
   @override
-  final String username;
+  final String? username;
   @override
-  final String password;
+  final String? password;
   @override
-  final bool isAdmin;
+  final bool? isAdmin;
   @override
-  final String createdAt;
+  final String? createdAt;
   @override
-  final String updatedAt;
+  final String? updatedAt;
 
   @override
   String toString() {
@@ -226,28 +226,28 @@ class _$_User implements _User {
 
 abstract class _User implements User {
   const factory _User(
-      {@JsonKey(name: '_id') required final String idUser,
-      required final String username,
-      required final String password,
-      required final bool isAdmin,
-      required final String createdAt,
-      required final String updatedAt}) = _$_User;
+      {@JsonKey(name: '_id') final String? idUser,
+      final String? username,
+      final String? password,
+      final bool? isAdmin,
+      final String? createdAt,
+      final String? updatedAt}) = _$_User;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$_User.fromJson;
 
   @override
   @JsonKey(name: '_id')
-  String get idUser;
+  String? get idUser;
   @override
-  String get username;
+  String? get username;
   @override
-  String get password;
+  String? get password;
   @override
-  bool get isAdmin;
+  bool? get isAdmin;
   @override
-  String get createdAt;
+  String? get createdAt;
   @override
-  String get updatedAt;
+  String? get updatedAt;
   @override
   @JsonKey(ignore: true)
   _$$_UserCopyWith<_$_User> get copyWith => throw _privateConstructorUsedError;

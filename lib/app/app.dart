@@ -23,9 +23,8 @@ class App extends StatelessWidget {
       child: MultiBlocProvider(
         providers: [
           BlocProvider(create: (context) => ProductBloc()),
-          // BlocProvider(create: (context) => LoginBloc()),
           BlocProvider(create: (context) => UserBloc()),
-          BlocProvider(create: (context) => AuthBloc())
+          BlocProvider(create: (context) => AuthBloc()),
         ],
         child: AppMain(),
       ),

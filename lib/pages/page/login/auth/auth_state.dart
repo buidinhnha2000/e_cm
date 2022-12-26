@@ -9,7 +9,6 @@ class LogOutState extends AuthState {}
 
 class SuccessAuthState extends AuthState {
   final User user;
-
   SuccessAuthState(this.user);
 }
 

@@ -11,5 +11,4 @@ class OnAddNewUser extends UserEvent {
 }
 
 class OnGetUserEvent extends UserEvent {
-
 }

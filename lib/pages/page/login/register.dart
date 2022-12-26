@@ -31,20 +31,20 @@ class _RegisterPageState extends State<RegisterPage> {
     super.initState();
   }
 
-  @override
-  void dispose() {
-    clear();
-    userController.dispose();
-    passwordController.dispose();
-    passController.dispose();
-    super.dispose();
-  }
-
-  void clear() {
-    userController.clear();
-    passwordController.clear();
-    passController.clear();
-  }
+  // @override
+  // void dispose() {
+  //   clear();
+  //   userController.dispose();
+  //   passwordController.dispose();
+  //   passController.dispose();
+  //   super.dispose();
+  // }
+  //
+  // void clear() {
+  //   userController.clear();
+  //   passwordController.clear();
+  //   passController.clear();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +56,7 @@ class _RegisterPageState extends State<RegisterPage> {
         if (state is LoadingUserState) {
         }
         if (state is SuccessUserState) {
-          Navigator.of(context).pop();
+          Navigator.of(context).pushNamed(AppRoutes.screen);
         }
         if (state is FailureUserState) {
           Navigator.of(context).pop();

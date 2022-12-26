@@ -8,12 +8,12 @@ part of 'cart.dart';
 
 _$_Cart _$$_CartFromJson(Map<String, dynamic> json) => _$_Cart(
       userId: json['userId'] as String,
-      product: Product.fromJson(json['product'] as Map<String, dynamic>),
+      product: Product.fromJson(json['productId'] as Map<String, dynamic>),
       quantity: json['quantity'] as int,
     );
 
 Map<String, dynamic> _$$_CartToJson(_$_Cart instance) => <String, dynamic>{
       'userId': instance.userId,
-      'product': instance.product,
+      'productId': instance.product,
       'quantity': instance.quantity,
     };

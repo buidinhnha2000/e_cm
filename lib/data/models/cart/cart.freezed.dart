@@ -21,6 +21,7 @@ Cart _$CartFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Cart {
   String get userId => throw _privateConstructorUsedError;
+  @JsonKey(name: "productId")
   Product get product => throw _privateConstructorUsedError;
   int get quantity => throw _privateConstructorUsedError;
 
@@ -34,7 +35,10 @@ abstract class $CartCopyWith<$Res> {
   factory $CartCopyWith(Cart value, $Res Function(Cart) then) =
       _$CartCopyWithImpl<$Res, Cart>;
   @useResult
-  $Res call({String userId, Product product, int quantity});
+  $Res call(
+      {String userId,
+      @JsonKey(name: "productId") Product product,
+      int quantity});
 
   $ProductCopyWith<$Res> get product;
 }
@@ -87,7 +91,10 @@ abstract class _$$_CartCopyWith<$Res> implements $CartCopyWith<$Res> {
       __$$_CartCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String userId, Product product, int quantity});
+  $Res call(
+      {String userId,
+      @JsonKey(name: "productId") Product product,
+      int quantity});
 
   @override
   $ProductCopyWith<$Res> get product;
@@ -127,13 +134,16 @@ class __$$_CartCopyWithImpl<$Res> extends _$CartCopyWithImpl<$Res, _$_Cart>
 @JsonSerializable()
 class _$_Cart implements _Cart {
   const _$_Cart(
-      {required this.userId, required this.product, required this.quantity});
+      {required this.userId,
+      @JsonKey(name: "productId") required this.product,
+      required this.quantity});
 
   factory _$_Cart.fromJson(Map<String, dynamic> json) => _$$_CartFromJson(json);
 
   @override
   final String userId;
   @override
+  @JsonKey(name: "productId")
   final Product product;
   @override
   final int quantity;
@@ -175,7 +185,7 @@ class _$_Cart implements _Cart {
 abstract class _Cart implements Cart {
   const factory _Cart(
       {required final String userId,
-      required final Product product,
+      @JsonKey(name: "productId") required final Product product,
       required final int quantity}) = _$_Cart;
 
   factory _Cart.fromJson(Map<String, dynamic> json) = _$_Cart.fromJson;
@@ -183,6 +193,7 @@ abstract class _Cart implements Cart {
   @override
   String get userId;
   @override
+  @JsonKey(name: "productId")
   Product get product;
   @override
   int get quantity;

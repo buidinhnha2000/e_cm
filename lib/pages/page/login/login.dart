@@ -1,5 +1,4 @@
 import 'package:e_cm/app/navigator/router.dart';
-import 'package:e_cm/pages/page/login/user/user_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_field_validator/form_field_validator.dart';
@@ -31,14 +30,14 @@ class _LoginPageState extends State<LoginPage> {
     super.initState();
   }
 
-  @override
-  void dispose() {
-    _usernameController.clear();
-    _usernameController.dispose();
-    _passwordController.clear();
-    _passwordController.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   _usernameController.clear();
+  //   _usernameController.dispose();
+  //   _passwordController.clear();
+  //   _passwordController.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context){
@@ -47,15 +46,20 @@ class _LoginPageState extends State<LoginPage> {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if( state is LoadingAuthState ){
-          Navigator.pop(context);
+          Navigator.of(context).pushNamed(AppRoutes.screen,);
           // modalLoading(context, 'Checking...');
         }else if( state is FailureAuthState ){
-          Navigator.pop(context);
+          Navigator.of(context).pushNamed(AppRoutes.screen,);
           // errorMessageSnack(context, state.error);
         }else if( state is SuccessAuthState ){
-          Navigator.pop(context);
-          UserBloc().add(OnGetUserEvent());
-          Navigator.of(context).pushNamed(AppRoutes.screen);
+          return setState(() {
+            Navigator.of(context).pushNamed(AppRoutes.screen,);
+          });
+            print(_passwordController.text);
+
+          // UserBloc().add(OnGetUserEvent());
+          // AuthBloc().add(LoginEvent(_usernameController.toString(), _passwordController.toString()));
+          Navigator.of(context).pushNamed(AppRoutes.screen,);
         }
       },
       child: Scaffold(
@@ -71,7 +75,7 @@ class _LoginPageState extends State<LoginPage> {
               child: const Text('Register'),
               onPressed: () => Navigator.of(context).pushNamed(AppRoutes.register),
             ),
-            SizedBox(width: 5)
+            const SizedBox(width: 5)
           ],
           elevation: 0,
           backgroundColor: Colors.black,
