@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../data/models/user/user.dart';
+import '../../../../data/model/user/user.dart';
 import '../../../../data/network/helper/secure_storage.dart';
 import '../../../../data/network/services/auth_services.dart';
 
@@ -19,13 +19,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<void> _login(LoginEvent event, Emitter<AuthState> emit) async {
     try {
       emit(LoadingAuthState());
-
-      final user = await authServices.login(event.username, event.password);
+      final user = await authServices.login(event.email, event.password);
+      print("user");
       if (user != null ) {
-        await secureStorage.saveUserId(user.idUser!);
+        await secureStorage.saveUserId(user.userId);
         emit(SuccessAuthState(user));
       }
-      // print(user);
     } catch (e) {
       emit(FailureAuthState(e.toString()));
     }
@@ -46,7 +45,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   Future<void> _logout(LogOutEvent event, Emitter<AuthState> emit) async {
-    // secureStorage.deleteSecureStorage();
+    secureStorage.deleteSecureStorage();
     emit(LogOutState());
   }
 }

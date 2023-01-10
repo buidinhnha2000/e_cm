@@ -8,14 +8,14 @@ class HomeBanner extends StatelessWidget {
     "assets/images/banner2.webp",
     "assets/images/banner3.webp",
     "assets/images/banner4.webp",
-    "assets/images/banner1.jpg",
-    "assets/images/banner2.jpg",
   ];
+
+  HomeBanner({super.key});
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return Container(
+    return SizedBox(
       width: double.infinity,
       child: CarouselSlider(
         options: CarouselOptions(

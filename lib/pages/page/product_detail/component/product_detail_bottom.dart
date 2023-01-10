@@ -1,81 +1,100 @@
+import 'package:e_cm/pages/page/product_detail/bloc/product_bloc.dart';
+import 'package:e_cm/pages/showdialog/model_success.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../app/navigator/router.dart';
+import '../../../../data/model/cart/cart.dart';
+import '../../../../data/model/product/product.dart';
+import '../../../../data/network/helper/secure_storage.dart';
 
-class ProductDetailBottom extends StatelessWidget {
-  const ProductDetailBottom({Key? key}) : super(key: key);
+class ProductDetailBottom extends StatefulWidget {
+  const ProductDetailBottom({Key? key, required this.product})
+      : super(key: key);
+  final Product product;
 
   @override
+  State<ProductDetailBottom> createState() => _ProductDetailBottomState();
+}
+
+class _ProductDetailBottomState extends State<ProductDetailBottom> {
+  @override
   Widget build(BuildContext context) {
-    routeCart() {
-      Navigator.of(context)
-          .pushNamed(AppRoutes.cart);
-    }
-    return BottomAppBar(
-      child: Container(
-        color: Colors.black,
-        height: 60,
-        child: Row(
-          children: [
-            Expanded(
-              flex: 1,
-              child: Container(
-                height: 60,
-                color: Colors.blueGrey[800],
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Icon(Icons.chat),
-                    Text("Chat Now", style: TextStyle(color: Colors.white70))
-                  ],
-                ),
-              ),
-            ),
-            const Divider(
-              color: Colors.white,
-              thickness: 2,
-              indent: 1,
-              endIndent: 1,
-            ),
-            Expanded(
-              flex: 1,
-              child: Container(
-                height: 60,
-                color: Colors.blueGrey[800],
-                child: TextButton(
-                  onPressed: () {
+    return BlocListener<ProductBloc, ProductState>(
+      listener: (context, state) {
+        if (state is LoadingProductState) {
+
+        } else if (state is FailureProductState) {
+
+        } else if (state is SuccessProductState) {
+          modalSuccess(context, 'Success', onPressed: (){});
+          Navigator.of(context).pushNamed(AppRoutes.cart);
+        }
+      },
+      child: BottomAppBar(
+        child: Container(
+          color: Colors.black87,
+          height: 60,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: 40,
+                width: 170,
+                child: OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                    side: const BorderSide(width: 1, color: Colors.blueAccent),
+                  ),
+                  onPressed: () async {
+                    final cart = CartProduct(
+                      userId: await secureStorage.getUserId(),
+                      productId: widget.product.productId,
+                      quantity: 1,
+                    );
+                    context.read<ProductBloc>().add(OnAddProductToCartEvent(cart));
                   },
-                  child: Column(
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: const [
-                      Icon(Icons.shopping_cart_outlined, color: Colors.white),
-                      Text("Add Cart", style: TextStyle(color: Colors.white70))
+                      Icon(Icons.shopping_cart_outlined,
+                          color: Colors.blueAccent),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Text("Add Cart",
+                          style:
+                              TextStyle(color: Colors.blueAccent, fontSize: 15))
                     ],
                   ),
                 ),
               ),
-            ),
-            const Divider(
-              color: Colors.black,
-              thickness: 2,
-              indent: 1,
-              endIndent: 1,
-            ),
-            Expanded(
-                flex: 2,
-                child: Container(
-                    height: 60,
-                    color: Colors.deepOrange[600],
-                    child: TextButton(
-                        onPressed: () {
-                          routeCart();
-                        },
-                        child: const Center(
-                          child: Text(
-                            'Mua hang',
-                            style: TextStyle(fontSize: 20,color: Colors.white),
-                          ),
-                        ))))
-          ],
+              const SizedBox(
+                width: 10,
+              ),
+              SizedBox(
+                height: 40,
+                width: 170,
+                child: OutlinedButton(
+                    style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStatePropertyAll(Colors.redAccent[400])),
+                    onPressed: () async {
+                      final cart = CartProduct(
+                          userId: await secureStorage.getUserId(),
+                          productId: widget.product.productId,
+                          quantity: 1);
+                      context
+                          .read<ProductBloc>()
+                          .add(OnPurchaseProductToCartEvent(cart));
+                    },
+                    child: const Center(
+                      child: Text(
+                        'Purchase',
+                        style: TextStyle(fontSize: 15, color: Colors.white),
+                      ),
+                    )),
+              )
+            ],
+          ),
         ),
       ),
     );

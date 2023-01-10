@@ -18,7 +18,9 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+
   late TextEditingController userController;
+  late TextEditingController emailController;
   late TextEditingController passwordController;
   late TextEditingController passController;
   final _formKey = GlobalKey<FormState>();
@@ -26,30 +28,33 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   void initState() {
     userController = TextEditingController();
+    emailController = TextEditingController();
     passwordController = TextEditingController();
     passController = TextEditingController();
     super.initState();
   }
 
-  // @override
-  // void dispose() {
-  //   clear();
-  //   userController.dispose();
-  //   passwordController.dispose();
-  //   passController.dispose();
-  //   super.dispose();
-  // }
-  //
-  // void clear() {
-  //   userController.clear();
-  //   passwordController.clear();
-  //   passController.clear();
-  // }
+  @override
+  void dispose() {
+    clear();
+    userController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    passController.dispose();
+    super.dispose();
+  }
+
+  void clear() {
+    userController.clear();
+    emailController.clear();
+    passwordController.clear();
+    passController.clear();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final userBloc = BlocProvider.of<UserBloc>(context);
     final size = MediaQuery.of(context).size;
+    final userBloc = BlocProvider.of<UserBloc>(context);
 
     return BlocListener<UserBloc, UserState>(
       listener: (context, state) {
@@ -59,7 +64,7 @@ class _RegisterPageState extends State<RegisterPage> {
           Navigator.of(context).pushNamed(AppRoutes.screen);
         }
         if (state is FailureUserState) {
-          Navigator.of(context).pop();
+          // Navigator.of(context).pop();
         }
       },
       child: Scaffold(
@@ -102,6 +107,14 @@ class _RegisterPageState extends State<RegisterPage> {
               const TextFrave(text: 'Create Account', fontSize: 17),
               const SizedBox(height: 20.0),
               TextFormFrave(
+                  hintText: 'Email Address',
+                  keyboardType: TextInputType.emailAddress,
+                  prefixIcon: const Icon(Icons.email_outlined),
+                  controller: emailController,
+                  validator: validatedEmail
+              ),
+              const SizedBox(height: 15.0),
+              TextFormFrave(
                 hintText: 'Username',
                 prefixIcon: const Icon(Icons.person),
                 controller: userController,
@@ -122,7 +135,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   prefixIcon: const Icon(Icons.vpn_key_rounded),
                   isPassword: true,
                   validator: (val) =>
-                      MatchValidator(errorText: 'Password do not macth ')
+                      MatchValidator(errorText: 'Password do not math ')
                           .validateMatch(val!, passwordController.text)),
               const SizedBox(height: 25.0),
               Row(
@@ -145,8 +158,10 @@ class _RegisterPageState extends State<RegisterPage> {
                 width: size.width,
                 fontSize: 20,
                 onPressed: () {
+                  // print(secureStorage.getUserId());
                   if (_formKey.currentState!.validate()) {
                     userBloc.add(OnAddNewUser(
+                      emailController.text.trim(),
                       userController.text.trim(),
                       passwordController.text.trim(),
                     ));

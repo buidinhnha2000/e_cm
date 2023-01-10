@@ -4,6 +4,8 @@ import 'package:e_cm/data/models/product/product.dart';
 import 'package:e_cm/data/network/remote.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../data/model/product/product.dart';
+
 class ProductDetailAvatar extends StatelessWidget {
   const ProductDetailAvatar({Key? key, required this.products}) : super(key: key);
   final Product products;

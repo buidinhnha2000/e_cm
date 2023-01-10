@@ -1,4 +1,5 @@
 
+import 'package:e_cm/data/network/helper/secure_storage.dart';
 import 'package:e_cm/l10n/l10n.dart';
 import 'package:e_cm/pages/page/product_detail/component/product_detail_header.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,7 @@ class _ProfileHeaderState extends State<ProfileHeader> {
 
   @override
   Widget build(BuildContext context) {
+    final data = secureStorage.getUserId().toString();
     return Container(
       color: Colors.black,
       height: 180,
@@ -42,7 +44,7 @@ class _ProfileHeaderState extends State<ProfileHeader> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text("buinha", style: TextStyle(color: Colors.white70, fontSize: 25, fontWeight: FontWeight.w600),),
+                      const Text("BuiNha", style: TextStyle(color: Colors.white70, fontSize: 15, fontWeight: FontWeight.w600),),
                       const SizedBox(height: 5,),
                       const Text("Thanh vien",style: TextStyle(color: Colors.white38),),
                       const SizedBox(height: 10,),

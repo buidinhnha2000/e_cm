@@ -1,7 +1,10 @@
+import 'package:e_cm/data/network/remote.dart';
+import 'package:e_cm/data/network/services/product.services.dart';
+import 'package:e_cm/data/network/services/rating_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../data/models/cart/cart.dart';
-import '../../../../data/models/product/product.dart';
+import '../../../../data/model/cart/cart.dart';
+import '../../../../data/model/rating/rating.dart';
 
 part 'product_event.dart';
 part 'product_state.dart';
@@ -12,44 +15,49 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
 
   ProductBloc() : super(ProductInitial()) {
     on<OnAddProductToCartEvent>(_addProductToCart);
-    on<OnPlusQuantityProductEvent>(_plusQuantityProduct);
-    on<OnSubtractQuantityProductEvent>(_subtractQuantityProduct);
+    on<OnPurchaseProductToCartEvent>(_purchaseProductToCart);
+    on<OnDeleteProductToCartEvent>(_deleteProductToCart);
+    on<IncrementQuantityProductEvent>(_incrementQuantityProduct);
+    on<DecrementQuantityProductEvent>(_decrementQuantityProduct);
+    on<OnRatingEvent>(_ratingToRating);
   }
 
   Future<void> _addProductToCart( OnAddProductToCartEvent event, Emitter<ProductState> emit ) async {
+    final cart = await productServices.addProductToCart(event.cart.userId, event.cart.productId);
+    emit(SetAddProductToCartState(carts: carts, amount: cart.quantity!.toInt()));
+  }
 
-    final hasCart = carts.contains( event.carts );
+  Future<void> _purchaseProductToCart( OnPurchaseProductToCartEvent event, Emitter<ProductState> emit ) async {
+    final cart = await productServices.addProductToCart(event.cart.userId, event.cart.productId);
+    emit(SetPurchaseProductToCartState(carts: carts, amount: cart.quantity!.toInt()));
+  }
 
-    if( !hasCart ){
+  Future<void> _deleteProductToCart (OnDeleteProductToCartEvent event, Emitter<ProductState> emit) async {
+    final cart = await productServices.deleteProductToCart(event.cart.userId, event.cart.product!.productId);
+    emit(SetDeleteProductToCartState(carts: carts, amount: cart.quantity!.toInt()));
+  }
 
-      carts.add( event.carts );
+  Future<void> _incrementQuantityProduct( IncrementQuantityProductEvent event, Emitter<ProductState> emit ) async {
 
-      double sum = 0;
+    final datasource = GetDataSource();
+    final _cart = datasource.getCart();
+    final cart = await productServices.updateProductToCart(event.cart.userId, event.cart.productId);
+    emit(SetIncrementProductState(carts: carts, amount: cart.quantity!.toInt()));
+  }
 
-      carts.forEach((e) => sum = sum + e.product.price );
+  Future<void> _decrementQuantityProduct( DecrementQuantityProductEvent event, Emitter<ProductState> emit ) async {
 
-      emit( SetAddProductToCartState(carts: carts, total: sum, amount: carts.length ));
+    emit( SetAddProductToCartState(carts: carts, amount: carts.length));
+  }
 
+  Future<void> _ratingToRating(OnRatingEvent event, Emitter<ProductState> emit) async {
+    try {
+      LoadingProductState();
+      final rating = await ratingServices.ratingToRating(event.userId, event.productId, event.response, event.rating);
+      emit(SuccessRatingState(rating));
+
+    }catch(e) {
+      emit(FailureProductState(e.toString()));
     }
   }
-  Future<void> _plusQuantityProduct( OnPlusQuantityProductEvent event, Emitter<ProductState> emit ) async {
-
-    carts[event.plus].product.amount + 1;
-
-    double total = 0;
-    carts.forEach((e) => total = total + (e.product.price * e.product.amount));
-
-    emit( SetAddProductToCartState(carts: carts, total: total, amount: carts.length));
-  }
-
-  Future<void> _subtractQuantityProduct( OnSubtractQuantityProductEvent event, Emitter<ProductState> emit ) async {
-
-    carts[event.subtract].product.amount -1;
-
-    double total = 0;
-    carts.forEach((e) => total = total - (e.product.price * e.product.amount));
-
-    emit( SetAddProductToCartState(carts: carts, total: total.abs(), amount: carts.length));
-  }
-
 }

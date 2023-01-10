@@ -51,9 +51,9 @@ class _HomeHeaderState extends State<HomeHeader> {
               IconSearch(color: _backgroundColorSearch),
               IconFuntion(color: _colorIcon,icon: Icons.shopping_cart_outlined, onPress: () {
                 routeCart();
-              }, notification: 20,),
+              }, notification: 4,),
               IconFuntion(color: _colorIcon,icon: Icons.chat, onPress: () {
-              }, notification: 15,),
+              }, notification: 1,),
             ],
           ),
         ),

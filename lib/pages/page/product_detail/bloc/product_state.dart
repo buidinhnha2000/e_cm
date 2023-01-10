@@ -3,7 +3,6 @@ part of 'product_bloc.dart';
 @immutable
 abstract class ProductState {
   final List<Cart>? carts;
-  final double total;
   final int amount;
   final double delivery;
   final double insurance;
@@ -11,7 +10,6 @@ abstract class ProductState {
 
   const ProductState({
     this.carts,
-    this.total  = 00.0,
     this.amount = 0,
     this.delivery  = 15.0,
     this.insurance = 10.0,
@@ -20,12 +18,21 @@ abstract class ProductState {
 }
 
 class ProductInitial extends ProductState {
-  ProductInitial(): super(carts: [], total: 00.0, amount: 0);
+  ProductInitial(): super(carts: [], amount: 0);
 }
 
 class LoadingProductState extends ProductState {}
 
-class SuccessProductState extends ProductState {}
+class SuccessProductState extends ProductState {
+
+}
+
+class SuccessRatingState extends ProductState {
+  final Rating rating;
+
+  const SuccessRatingState(this.rating);
+}
+
 
 class FailureProductState extends ProductState {
   final String error;
@@ -35,18 +42,57 @@ class FailureProductState extends ProductState {
 
 class SetAddProductToCartState extends ProductState{
   final List<Cart> carts;
-  final double total;
   final int amount;
 
   const SetAddProductToCartState({
     required this.carts,
-    required this.total,
     required this.amount
-  }):super(carts: carts, total: total, amount: amount);
+  }):super(carts: carts, amount: amount);
 }
 
-class SetImageForProductState extends ProductState {
-  final String path;
+class SetPurchaseProductToCartState extends ProductState{
+  final List<Cart> carts;
+  final int amount;
 
-  const SetImageForProductState(this.path):super(pathImage: path);
+  const SetPurchaseProductToCartState({
+    required this.carts,
+    required this.amount
+  }):super(carts: carts, amount: amount);
 }
+
+class SetDeleteProductToCartState extends ProductState{
+  final List<Cart> carts;
+  final int amount;
+
+  const SetDeleteProductToCartState({
+    required this.carts,
+    required this.amount
+  }):super(carts: carts, amount: amount);
+}
+
+class SetIncrementProductState extends ProductState{
+  final List<Cart> carts;
+  final int amount;
+
+  const SetIncrementProductState({
+    required this.carts,
+    required this.amount
+  }):super(carts: carts, amount: amount);
+}
+
+class SetDecrementProductState extends ProductState{
+  final List<Cart> carts;
+  final int amount;
+
+  const SetDecrementProductState({
+    required this.carts,
+    required this.amount
+  }):super(carts: carts, amount: amount);
+}
+
+class RatingState extends ProductState{
+  final List<Rating> ratings;
+
+  const RatingState(this.ratings);
+}
+

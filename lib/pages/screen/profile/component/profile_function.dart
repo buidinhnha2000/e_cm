@@ -1,6 +1,10 @@
 
 import 'package:e_cm/app/navigator/router.dart';
+import 'package:e_cm/pages/page/login/auth/auth_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../page/login/user/user_bloc.dart';
 
 class ProfileFunction extends StatelessWidget {
   const ProfileFunction({Key? key}) : super(key: key);
@@ -11,12 +15,14 @@ class ProfileFunction extends StatelessWidget {
       Navigator.of(context)
           .pushNamed(AppRoutes.introduction);
     }
+    final authrBloc = BlocProvider.of<AuthBloc>(context);
+
     return Container(
         color: Colors.black45,
         child: ListView(
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
-          padding: EdgeInsets.all(0),
+          padding: const EdgeInsets.all(0),
           children: [
             GestureDetector(
               onTap: (){
@@ -90,7 +96,9 @@ class ProfileFunction extends StatelessWidget {
               ),
             ),
             GestureDetector(
-              onTap: (){},
+              onTap: (){
+                authrBloc.add(LogOutEvent());
+              },
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Row(

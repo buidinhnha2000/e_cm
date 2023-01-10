@@ -3,6 +3,7 @@ import 'package:e_cm/data/models/product/product.dart';
 import 'package:e_cm/data/network/remote.dart';
 import 'package:flutter/material.dart';
 import '../../../app/navigator/router.dart';
+import '../../../data/model/product/product.dart';
 
 final product = GetDataSource();
 class Search extends StatefulWidget {

@@ -30,13 +30,13 @@ class _ProductDetailHeaderState extends State<ProductDetailHeader> {
               onPress: () {
                 routeCart();
               },
-              notification: 9,
+              notification: 4,
             ),
             IconFuntion(
               color: Colors.white,
               icon: Icons.chat,
               onPress: () {},
-              notification: 6,
+              notification: 1,
             )
           ],
         ),

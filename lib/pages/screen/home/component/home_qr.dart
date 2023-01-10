@@ -46,7 +46,7 @@ class HomeQr extends StatelessWidget {
                       ),
                       const Text(
                         "100 USD off for the first 100 orders",
-                        style: TextStyle(color: Colors.white54, fontSize: 12),
+                        style: TextStyle(color: Colors.white54, fontSize: 10),
                       )
                     ],
                   ),
@@ -77,7 +77,7 @@ class HomeQr extends StatelessWidget {
                       ),
                       const Text(
                         "Free shipping for the first 100 orders",
-                        style: TextStyle(color: Colors.white54, fontSize: 12),
+                        style: TextStyle(color: Colors.white54, fontSize: 10),
                       )
                     ],
                   ),

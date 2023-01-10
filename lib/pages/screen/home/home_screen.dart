@@ -1,3 +1,4 @@
+
 import 'package:e_cm/data/network/remote.dart';
 import 'package:flutter/material.dart';
 import 'component/home_banner.dart';
@@ -44,11 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           height: 55,
                           color: Colors.lightBlueAccent,
                         ),
-                        Container(
-                          height: 100,
-                          color: Colors.lightBlue,
-                          child: const HomeCategori(),
-                        ),
+                        const HomeCategori(),
                         const SizedBox(
                           height: 20,
                         ),

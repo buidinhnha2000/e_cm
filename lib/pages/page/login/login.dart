@@ -1,7 +1,6 @@
 import 'package:e_cm/app/navigator/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:form_field_validator/form_field_validator.dart';
 
 import 'component/validationform.dart';
 import 'auth/auth_bloc.dart';
@@ -18,14 +17,14 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
 
-  late TextEditingController _usernameController;
+  late TextEditingController _emailController;
   late TextEditingController _passwordController;
   final _keyForm = GlobalKey<FormState>();
   bool isChangeSuffixIcon = true;
 
   @override
   void initState() {
-    _usernameController = TextEditingController();
+    _emailController = TextEditingController();
     _passwordController = TextEditingController();
     super.initState();
   }
@@ -43,23 +42,19 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context){
 
     final size = MediaQuery.of(context).size;
+    final authBloc =  BlocProvider.of<AuthBloc>(context);
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if( state is LoadingAuthState ){
-          Navigator.of(context).pushNamed(AppRoutes.screen,);
           // modalLoading(context, 'Checking...');
         }else if( state is FailureAuthState ){
-          Navigator.of(context).pushNamed(AppRoutes.screen,);
           // errorMessageSnack(context, state.error);
-        }else if( state is SuccessAuthState ){
-          return setState(() {
-            Navigator.of(context).pushNamed(AppRoutes.screen,);
-          });
-            print(_passwordController.text);
-
+        }else if( state is SuccessAuthState ) {
+          Navigator.of(context).pushNamed(AppRoutes.screen,);
+          // print(_passwordController.text);
           // UserBloc().add(OnGetUserEvent());
           // AuthBloc().add(LoginEvent(_usernameController.toString(), _passwordController.toString()));
-          Navigator.of(context).pushNamed(AppRoutes.screen,);
+          // Navigator.of(context).pushNamed(AppRoutes.screen,);
         }
       },
       child: Scaffold(
@@ -92,10 +87,11 @@ class _LoginPageState extends State<LoginPage> {
                 const TextFrave(text: 'Login Account', fontSize: 17),
                 const SizedBox(height: 20.0),
                 TextFormFrave(
-                  hintText: 'Username',
-                  prefixIcon: const Icon(Icons.person),
-                  controller: _usernameController,
-                  validator: RequiredValidator(errorText: 'Username is required'),
+                    hintText: 'Email Address',
+                    keyboardType: TextInputType.emailAddress,
+                    prefixIcon: const Icon(Icons.email_outlined),
+                    controller: _emailController,
+                    validator: validatedEmail
                 ),
                 const SizedBox(height: 20),
                 TextFormFrave(
@@ -106,14 +102,13 @@ class _LoginPageState extends State<LoginPage> {
                   validator: passwordValidator,
                 ),
                 const SizedBox(height:  40),
-
                 BtnFrave(
                   text: 'Sign in',
                   width: size.width,
                   fontSize: 20,
                   onPressed: (){
                     if( _keyForm.currentState!.validate() ){
-                      AuthBloc().add(LoginEvent(_usernameController.text.trim(), _passwordController.text.trim()));
+                      authBloc.add(LoginEvent(_emailController.text.trim(), _passwordController.text.trim()));
                     }
                   },
                 ),
@@ -126,7 +121,6 @@ class _LoginPageState extends State<LoginPage> {
                       onPressed: () => Navigator.of(context).pushNamed(AppRoutes.screen),
                   ),
                 ),
-
               ],
             ),
           ),

@@ -1,4 +1,3 @@
-
 import 'package:e_cm/pages/screen/profile/profile.dart';
 import 'package:flutter/material.dart';
 import '../../pages/screen/home/home_screen.dart';
@@ -23,10 +22,10 @@ class _BaseScreenState extends State<BaseScreen> {
   }
 
   static List<Widget> pages = <Widget>[
-    HomeScreen(),
-    MallScreen(),
-    NotificationScreen(),
-    ProfileScreen(),
+    const HomeScreen(),
+    const MallScreen(),
+    const NotificationScreen(),
+    const ProfileScreen(),
   ];
 
   @override
@@ -37,7 +36,7 @@ class _BaseScreenState extends State<BaseScreen> {
           type: BottomNavigationBarType.fixed,
           unselectedItemColor: Colors.blueGrey,
           backgroundColor: Colors.black,
-          selectedItemColor: Colors.tealAccent,
+          selectedItemColor: Colors.blue,
           onTap: _onBottomAppBarClicked,
           currentIndex: _selectedIndex,
           items: List.generate(items.length, (index) {
@@ -46,7 +45,6 @@ class _BaseScreenState extends State<BaseScreen> {
           })),
     );
   }
-
 // Widget getFooter() {
 //   return Container(
 //       height: 50,

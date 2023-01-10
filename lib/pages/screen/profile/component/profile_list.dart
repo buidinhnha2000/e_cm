@@ -1,3 +1,4 @@
+import 'package:e_cm/app/navigator/router.dart';
 import 'package:flutter/material.dart';
 
 class ProfileList extends StatelessWidget {
@@ -8,12 +9,14 @@ class ProfileList extends StatelessWidget {
     return Container(
         color: Colors.black45,
         child: ListView(
-          padding: EdgeInsets.all(0),
+          padding: const EdgeInsets.all(0),
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           children: [
             GestureDetector(
-              onTap: (){},
+              onTap: (){
+                Navigator.of(context).pushNamed(AppRoutes.addressList);
+              },
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Row(
@@ -22,17 +25,42 @@ class ProfileList extends StatelessWidget {
                     Row(
                       children: const [
                         Icon(
-                          Icons.favorite_border_outlined,
+                          Icons.pin_drop_outlined,
+                          color: Colors.lightGreenAccent,
+                          size: 25,
+                        ),
+                        SizedBox(width: 10,),
+                        Text("Delivery address", style: TextStyle(fontSize: 15, color: Colors.white70),)
+                      ],
+                    ),
+                    const Icon(Icons.navigate_next, color: Colors.white30,)
+                  ],
+                ),
+              ),
+            ),
+            GestureDetector(
+              onTap: (){
+                Navigator.of(context).pushNamed(AppRoutes.orderHistory);
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: const [
+                        Icon(
+                          Icons.shopify_outlined,
                           color: Colors.red,
                           size: 25,
                         ),
                         SizedBox(width: 10,),
-                        Text("My Like", style: TextStyle(fontSize: 15, color: Colors.white70),)
+                        Text("Order History", style: TextStyle(fontSize: 15, color: Colors.white70),)
                       ],
                     ),
                     Row(
                       children: const [
-                        Text("19 Like", style: TextStyle(fontSize: 13, color: Colors.white38),),
+                        Text("5 order", style: TextStyle(fontSize: 13, color: Colors.white38),),
                         Icon(Icons.navigate_next, color: Colors.white30,)
                       ],
                     )
@@ -87,29 +115,6 @@ class ProfileList extends StatelessWidget {
                         Icon(Icons.navigate_next, color: Colors.white30,)
                       ],
                     )
-                  ],
-                ),
-              ),
-            ),
-            GestureDetector(
-              onTap: (){},
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: const [
-                        Icon(
-                          Icons.pin_drop_outlined,
-                          color: Colors.lightGreenAccent,
-                          size: 25,
-                        ),
-                        SizedBox(width: 10,),
-                        Text("Locations", style: TextStyle(fontSize: 15, color: Colors.white70),)
-                      ],
-                    ),
-                    const Icon(Icons.navigate_next, color: Colors.white30,)
                   ],
                 ),
               ),

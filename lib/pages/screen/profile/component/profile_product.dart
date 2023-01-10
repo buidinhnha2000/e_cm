@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:e_cm/pages/page/categories/categories.dart';
 import 'package:flutter/material.dart';
-
-import '../../../page/cart/component/cart_product.dart';
+import '../../../../data/model/product/product.dart';
 
 class ProfileProduct extends StatelessWidget {
   const ProfileProduct({Key? key}) : super(key: key);
@@ -44,13 +44,13 @@ class ProfileProduct extends StatelessWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
                 ),
-                height: 270,
+                height: 220,
                 width: MediaQuery
                     .of(context)
                     .size
                     .width,
-                child: FutureBuilder(
-                  future: movies.getMovie(),
+                child: FutureBuilder<List<Product>>(
+                  future: product.getProduct(),
                   builder: (context, snapshot) {
                     if(snapshot.hasData && snapshot.data !=null){
                       return ListView.builder(
@@ -79,7 +79,7 @@ class ProfileProduct extends StatelessWidget {
                                   SizedBox(
                                     height: 40,
                                     child: Text(
-                                      snapshot.data![index].name,
+                                      snapshot.data![index].title,
                                       style:
                                       const TextStyle(color: Colors.white60),
                                     ),
@@ -88,7 +88,7 @@ class ProfileProduct extends StatelessWidget {
                                     height: 5,
                                   ),
                                   Text(
-                                    snapshot.data![index].year,
+                                    "${snapshot.data![index].price} \$",
                                     style: const TextStyle(color: Colors.red),
                                   ),
                                   const SizedBox(
@@ -104,7 +104,7 @@ class ProfileProduct extends StatelessWidget {
                                         width: 3,
                                       ),
                                       Text(
-                                        snapshot.data![index].top,
+                                        "${snapshot.data![index].quantity}",
                                         style: const TextStyle(
                                             color: Colors.white60),
                                       )

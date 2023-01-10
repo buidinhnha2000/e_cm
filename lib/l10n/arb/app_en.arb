@@ -4,6 +4,11 @@
     "text_product": "Product Hot",
     "text_login": "Login",
     "text_product": "Product",
+    "text_categories": "Categories",
     "text_cart": "Cart",
-    "text_trademark_hot": "Hot trademarks"
+    "text_trademark_hot": "Hot trademarks",
+    "text_update_address": "Add address",
+    "text_profile_order_history": "Order History",
+    "text_address_list": "My Address",
+    "text_order": "Order"
 }

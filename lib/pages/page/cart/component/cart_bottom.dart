@@ -1,4 +1,12 @@
+import 'package:e_cm/app/navigator/router.dart';
+import 'package:e_cm/data/network/remote.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../bloc/cart_bloc.dart';
+
+
+final cart = GetDataSource();
 
 class CartBottom extends StatefulWidget {
   const CartBottom({Key? key}) : super(key: key);
@@ -7,78 +15,55 @@ class CartBottom extends StatefulWidget {
   State<CartBottom> createState() => _CartBottomState();
 }
 
-class _CartBottomState extends State<CartBottom> {
-  bool isChecked = false;
 
+class _CartBottomState extends State<CartBottom> {
   @override
   Widget build(BuildContext context) {
-    Color getColor(Set<MaterialState> states) {
-      const Set<MaterialState> interactiveStates = <MaterialState>{
-        MaterialState.pressed,
-        MaterialState.hovered,
-        MaterialState.focused,
-      };
-      if (states.any(interactiveStates.contains)) {
-        return Colors.blue;
-      }
-      return Colors.red;
-    }
+    // final cartBloc = BlocProvider.of<CartBloc>(context);
 
     return BottomAppBar(
-      child: SizedBox(
-        height: 60,
-        child: Row(
-          children: [
-            Expanded(
-              flex: 2,
-              child: Container(
-                  height: 60,
-                  color: Colors.black45,
-                  child: Row(
-                    children: [
-                      Checkbox(
-                        checkColor: Colors.white,
-                        fillColor: MaterialStateProperty.resolveWith(getColor),
-                        value: isChecked,
-                        onChanged: (bool? value) {
-                          setState(() {
-                            isChecked = value!;
-                          });
-                        },
-                      ),
-                      const Text("All", style: TextStyle(fontSize: 17),)
-                    ],
-                  )
-              ),
+            child: Container(
+          color: Colors.black87,
+          child: SizedBox(
+            height: 60,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  height: 40,
+                  width: 170,
+                  padding: const EdgeInsets.all(3.0),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.blueAccent),
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: const Center(child: Text("")),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                SizedBox(
+                  height: 40,
+                  width: 170,
+                  child: OutlinedButton(
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStatePropertyAll(Colors.redAccent[400])),
+                      onPressed: () async {
+                        Navigator.of(context).pushNamed(AppRoutes.card);
+
+                        // cartBloc.add(AddToOrder());
+                      },
+                      child: const Center(
+                        child: Text(
+                          'Payment',
+                          style: TextStyle(fontSize: 15, color: Colors.white),
+                        ),
+                      )),
+                )
+              ],
             ),
-            Expanded(
-              flex: 4,
-              child: Container(
-                  height: 60,
-                  color: Colors.black45,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Text("Total :", style: TextStyle(fontSize: 17),),
-                      SizedBox(width: 5,),
-                      Text("189324 USD", style: TextStyle(fontSize: 17, color: Colors.deepOrange),)
-                    ],
-                  )),
-            ),
-            Expanded(
-                flex: 2,
-                child: Container(
-                    height: 60,
-                    color: Colors.deepOrange[600],
-                    child: const Center(
-                      child: Text(
-                        'Mua hang',
-                        style: TextStyle(fontSize: 17),
-                      ),
-                    )))
-          ],
-        ),
-      ),
-    );
+          ),
+        ));
   }
 }

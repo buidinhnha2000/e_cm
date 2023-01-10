@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_cm/data/network/remote.dart';
 import 'package:flutter/material.dart';
-import '../../../../data/models/movie/movie.dart';
+import '../../../../data/model/product/product.dart';
 
-final movies = GetDataSource();
+final product = GetDataSource();
 
 class HomeSale extends StatefulWidget {
   const HomeSale({Key? key}) : super(key: key);
@@ -29,7 +29,7 @@ class _HomeSaleState extends State<HomeSale> {
                     left: 15,
                   ),
                   child: Text(
-                    "Same price 0 USD",
+                    "Recommended products",
                     style: TextStyle(
                         color: Colors.red,
                         fontSize: 20,
@@ -60,8 +60,8 @@ class _HomeSaleState extends State<HomeSale> {
                       color: Colors.blueGrey[900]),
                   height: 190,
                   width: MediaQuery.of(context).size.width,
-                  child: FutureBuilder<List<Movie>>(
-                    future: movies.getMovie(),
+                  child: FutureBuilder<List<Product>>(
+                    future: product.getProduct(),
                     builder: (BuildContext context, snapshot) {
                       if(snapshot.hasData && snapshot.data != null) {
                         return ListView.builder(
@@ -80,7 +80,7 @@ class _HomeSaleState extends State<HomeSale> {
                                   children: [
                                     SizedBox(
                                         height: 150,
-                                        width: 100,
+                                        width: 130,
                                         child: ClipRRect(
                                           borderRadius: const BorderRadius.all(
                                               Radius.circular(5)),
@@ -93,7 +93,7 @@ class _HomeSaleState extends State<HomeSale> {
                                       height: 5,
                                     ),
                                     Text(
-                                      snapshot.data![index].quality,
+                                      "${snapshot.data![index].price} \$",
                                       style: const TextStyle(color: Colors.pink),
                                     ),
                                   ],

@@ -10,9 +10,9 @@ abstract class UserState {
 class UserInitial extends UserState {}
 
 class SetUserState extends UserState {
-  final User idUser;
+  final User userId;
 
-  SetUserState(this.idUser);
+  const SetUserState(this.userId);
 }
 
 class LoadingUserState extends UserState {}

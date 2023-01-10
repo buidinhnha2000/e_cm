@@ -1,36 +1,29 @@
+import 'package:e_cm/theme/text_schemes.dart';
 import 'package:flutter/material.dart';
+import 'color_schemes.dart';
 
 abstract class AppTheme {
   AppTheme._();
 
   static ThemeData get light {
     return ThemeData(
-      appBarTheme: const AppBarTheme(
-        color: Color(0xFF13B9FF),
-      ),
-      colorScheme: ColorScheme.fromSwatch(
-        accentColor: const Color(0xFF13B9FF),
-      ),
-      snackBarTheme: const SnackBarThemeData(
-        behavior: SnackBarBehavior.floating,
-      ),
-      toggleableActiveColor: const Color(0xFF13B9FF),
+        useMaterial3: true,
+        colorScheme: lightColorScheme,
+        snackBarTheme: const SnackBarThemeData(
+          behavior: SnackBarBehavior.floating,
+        ),
+        textTheme: textThemeLight
     );
   }
 
   static ThemeData get dark {
     return ThemeData(
-      appBarTheme: const AppBarTheme(
-        color: Color(0xFF13B9FF),
-      ),
-      colorScheme: ColorScheme.fromSwatch(
-        brightness: Brightness.dark,
-        accentColor: const Color(0xFF13B9FF),
-      ),
+      useMaterial3: true,
+      colorScheme: darkColorScheme,
       snackBarTheme: const SnackBarThemeData(
         behavior: SnackBarBehavior.floating,
       ),
-      toggleableActiveColor: const Color(0xFF13B9FF),
+      textTheme: textThemeLight,
     );
   }
 }

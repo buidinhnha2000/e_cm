@@ -1,147 +1,197 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:e_cm/data/network/helper/secure_storage.dart';
 import 'package:e_cm/data/network/remote.dart';
+import 'package:e_cm/pages/page/product_detail/bloc/product_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
+import '../../../../data/model/cart/cart.dart';
 
-import '../../../../data/models/movie/movie.dart';
+final cart = GetDataSource();
+final user = secureStorage.getUserId();
 
-final movies = GetDataSource();
-
-class CartProduct extends StatefulWidget {
-  const CartProduct({Key? key}) : super(key: key);
+class CartProducts extends StatefulWidget {
+  const CartProducts({Key? key}) : super(key: key);
 
   @override
-  State<CartProduct> createState() => _CartProductState();
+  State<CartProducts> createState() => _CartProductsState();
 }
 
-class _CartProductState extends State<CartProduct> {
-  bool isChecked = false;
-
+class _CartProductsState extends State<CartProducts> {
   @override
   Widget build(BuildContext context) {
-    Color getColor(Set<MaterialState> states) {
-      const Set<MaterialState> interactiveStates = <MaterialState>{
-        MaterialState.pressed,
-        MaterialState.hovered,
-        MaterialState.focused,
-      };
-      if (states.any(interactiveStates.contains)) {
-        return Colors.blue;
-      }
-      return Colors.red;
-    }
-
-    return FutureBuilder<List<Movie>>(future: movies.getMovie(), builder: (BuildContext context, snapshot) {
-      if(snapshot.hasData && snapshot.data != null){
-        return ListView.builder(
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            scrollDirection: Axis.vertical,
-            itemCount: snapshot.data?.length ?? 0,
-            itemBuilder: (BuildContext context, int index) {
-              return GestureDetector(
-                onTap: () {},
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5.0),
-                      color: Colors.black54,
-                    ),
-                    padding: const EdgeInsets.only(
-                      right: 10,
-                      top: 5,
-                    ),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          flex: 1,
-                          child: Checkbox(
-                            checkColor: Colors.white,
-                            fillColor: MaterialStateProperty.resolveWith(getColor),
-                            value: isChecked,
-                            onChanged: (bool? value) {
-                              setState(() {
-                                isChecked = value!;
-                              });
-                            },
-                          ),
-                        ),
-                        Expanded(
-                            flex: 2,
-                            child: SizedBox(
-                              height: 80,
-                              width: MediaQuery.of(context).size.width,
-                              child: ClipRRect(
-                                borderRadius:
-                                const BorderRadius.all(Radius.circular(5)),
-                                child: CachedNetworkImage(
-                                  imageUrl: snapshot.data![index].img,
-                                  fit: BoxFit.fill,
-                                ),
-                              ),)),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                            flex: 5,
+    return FutureBuilder<List<Cart>>(
+        future: cart.getCart(),
+        builder: (BuildContext context, snapshot) {
+          if (snapshot.hasData && snapshot.data != null) {
+            return FutureBuilder<String?>(
+                future: secureStorage.getUserId(),
+                builder: (context, snapshotUserId) {
+                  if (snapshotUserId.hasData && snapshotUserId.data != null) {
+                    return ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        scrollDirection: Axis.vertical,
+                        itemCount: snapshot.data?.length ?? 0,
+                        itemBuilder: (BuildContext context, int index) {
+                          return GestureDetector(
+                            onTap: () {},
                             child: Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(snapshot.data![index].name,
-                                      style: const TextStyle(
-                                          color: Colors.white54, fontSize: 15)),
-                                  const SizedBox(
-                                    height: 5,
+                              padding: const EdgeInsets.only(
+                                  top: 10, right: 10, left: 10),
+                              child: Slidable(
+                                key: const ValueKey(0),
+                                endActionPane: ActionPane(
+                                  motion: const ScrollMotion(),
+                                  dismissible:
+                                      DismissiblePane(onDismissed: () {}),
+                                  children: const [
+                                    SlidableAction(
+                                      onPressed: null,
+                                      backgroundColor: Color(0xFF21B7CA),
+                                      foregroundColor: Colors.white,
+                                      icon: Icons.share,
+                                      label: 'Share',
+                                    ),
+                                    SlidableAction(
+                                      onPressed: null,
+                                      backgroundColor: Color(0xFFFE4A49),
+                                      foregroundColor: Colors.white,
+                                      icon: Icons.delete,
+                                      label: 'Delete',
+                                    ),
+                                  ],
+                                ),
+                                child: Container(
+                                  decoration: const BoxDecoration(
+                                    borderRadius: BorderRadius.only(
+                                        bottomLeft: Radius.circular(5),
+                                        topLeft: Radius.circular(5)),
+                                    color: Colors.black54,
                                   ),
-                                  Text(
-                                    snapshot.data![index].year,
-                                    style: const TextStyle(
-                                        color: Colors.deepOrange, fontSize: 20),
-                                  ),
-                                  Row(
+                                  padding: const EdgeInsets.all(10),
+                                  child: Row(
                                     children: [
-                                      IconButton(
-                                          onPressed: () {},
-                                          icon: const Icon(
-                                            Icons.remove,
-                                            color: Colors.white54,
+                                      Expanded(
+                                          flex: 2,
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                const BorderRadius.all(
+                                                    Radius.circular(5)),
+                                            child: CachedNetworkImage(
+                                              imageUrl: snapshot
+                                                  .data![index].product!.img,
+                                              fit: BoxFit.fill,
+                                            ),
                                           )),
-                                      Text(snapshot.data![index].top,
-                                          style: const TextStyle(
-                                              color: Colors.white54, fontSize: 15)),
-                                      IconButton(
-                                          onPressed: () {},
-                                          icon: const Icon(
-                                            Icons.add,
-                                            color: Colors.white54,
-                                          ))
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Expanded(
+                                          flex: 5,
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                  snapshot.data![index].product!
+                                                      .title,
+                                                  style: const TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 17)),
+                                              const SizedBox(
+                                                height: 5,
+                                              ),
+                                              Text(
+                                                "${snapshot.data![index].product!.price} \$",
+                                                style: TextStyle(
+                                                    color:
+                                                        Colors.redAccent[400],
+                                                    fontSize: 20),
+                                              ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Row(
+                                                    children: [
+                                                      IconButton(
+                                                          onPressed: () async {
+                                                            final cart = CartProduct(
+                                                                userId: await secureStorage
+                                                                    .getUserId(),
+                                                                productId: snapshot
+                                                                    .data![
+                                                                        index]
+                                                                    .product!
+                                                                    .productId,
+                                                                quantity: (snapshot
+                                                                        .data![
+                                                                            index]
+                                                                        .quantity! -
+                                                                    1));
+                                                            context
+                                                                .read<
+                                                                    ProductBloc>()
+                                                                .add(
+                                                                    IncrementQuantityProductEvent(
+                                                                        cart));
+                                                          },
+                                                          icon: const Icon(
+                                                            Icons.remove,
+                                                            color:
+                                                                Colors.white70,
+                                                          )),
+                                                      Text(
+                                                          snapshot.data![index]
+                                                              .quantity
+                                                              .toString(),
+                                                          style: const TextStyle(
+                                                              color: Colors
+                                                                  .white70,
+                                                              fontSize: 15)),
+                                                      IconButton(
+                                                          onPressed: () {},
+                                                          icon: const Icon(
+                                                            Icons.add,
+                                                            color:
+                                                                Colors.white70,
+                                                          )),
+                                                    ],
+                                                  ),
+                                                  Text(
+                                                    "${snapshot.data![index].product!.price * snapshot.data![index].quantity!.toDouble()} \$",
+                                                    style: const TextStyle(
+                                                        color:
+                                                            Colors.blueAccent,
+                                                        fontSize: 20),
+                                                  ),
+                                                ],
+                                              )
+                                            ],
+                                          )),
                                     ],
-                                  )
-                                ],
+                                  ),
+                                ),
                               ),
-                            )),
-                        Expanded(
-                            flex: 1,
-                            child: IconButton(onPressed: (){}, icon: const Icon(Icons.delete_forever, size: 30, color: Colors.deepOrange,))
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              );
-            });
-      }
-      return const Padding(
-        padding: EdgeInsets.only(top: 300.0),
-        child: Center(
-          child: CircularProgressIndicator(
-
-            color: Colors.redAccent,
-          ),
-        ),
-      );
-    });
+                            ),
+                          );
+                        });
+                  } else {
+                    return const CircularProgressIndicator();
+                  }
+                });
+            // }
+          }
+          return const Padding(
+            padding: EdgeInsets.only(top: 300.0),
+            child: Center(
+              child: CircularProgressIndicator(
+                color: Colors.redAccent,
+              ),
+            ),
+          );
+        });
   }
 }
