@@ -1,28 +1,29 @@
 part of 'card_bloc.dart';
 
 @immutable
-abstract class CardState {
-
+abstract class CardState extends BaseState {
 }
 
 class CardInitial extends CardState {
+  @override
+  // TODO: implement props
+  List<Object?> get props => [];
 
 }
 
-class LoadingCard extends CardState {
+class PaymentCreateIntentState extends CardState {
+  final BillingDetailModel billingDetailModel;
 
+  PaymentCreateIntentState(this.billingDetailModel);
+
+  @override
+  List<Object?> get props => [billingDetailModel];
 }
-
-class SuccessCard extends CardState {
+class PaymentCreateMethodState extends CardState{
   final CardDetails card;
 
-  SuccessCard(this.card);
+  PaymentCreateMethodState(this.card);
 
-}
-
-class FailedCard extends CardState {
-  final error;
-
-  FailedCard(this.error);
-
+  @override
+  List<Object?> get props => [card];
 }

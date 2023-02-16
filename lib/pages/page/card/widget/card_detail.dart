@@ -3,7 +3,6 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../app/navigator/router.dart';
-import '../../../../data/network/services/payment_service.dart';
 import '../bloc/card_bloc.dart';
 import 'formater.dart';
 import 'loading_button.dart';
@@ -20,6 +19,10 @@ class _CardDetailState extends State<CardDetail> {
   late TextEditingController emailController;
   late TextEditingController nameCardController;
   late TextEditingController zipCodeController;
+  late TextEditingController numberCard;
+  late int expirationMonth;
+  late int expirationYear;
+  late TextEditingController cvc;
   late String country;
 
   CardDetails _card = CardDetails();
@@ -30,7 +33,10 @@ class _CardDetailState extends State<CardDetail> {
     emailController = TextEditingController();
     nameCardController = TextEditingController();
     zipCodeController = TextEditingController();
-    controller.addListener(update);
+    numberCard = TextEditingController();
+    expirationMonth = 11;
+    expirationYear = 2024;
+    cvc = TextEditingController();
     super.initState();
   }
 
@@ -46,184 +52,154 @@ class _CardDetailState extends State<CardDetail> {
 
   @override
   Widget build(BuildContext context) {
-    // final cardBloc = BlocProvider.of<CardBloc>(context);
-    return Container(
-      color: widget.keyShow ? Colors.black : Colors.white38,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+    return BlocListener<CardBloc, CardState>(
+      listener: (context, state) {
+        if (state is PaymentCreateMethodState || state is PaymentCreateIntentState) {
+          Navigator.of(context).pushNamed(AppRoutes.home);
+        }else{
+          Navigator.of(context).pushNamed(AppRoutes.home);
+        }
+      },
+      child: Stack(
         children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 24, right: 24, top: 20),
-            child: SizedBox(
-                height: 50,
-                child: LoadingButton(
-                    onPressed: () {
-                      return Navigator.of(context).pushNamed(AppRoutes.home);
-                    },
-                    text: 'Pay',
-                    color: Colors.white,
-                    img: 'assets/images/apple1.png')),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 24, right: 24),
-            child: Row(
+          Container(
+            color: Colors.white24,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const Expanded(
-                  flex: 1,
-                  child: Divider(color: Colors.white54),
+                Padding(
+                  padding: const EdgeInsets.only(left: 24, right: 24, top: 20),
+                  child: SizedBox(
+                      height: 50,
+                      child: LoadingButton(
+                          onPressed: () {
+                            return Navigator.of(context)
+                                .pushNamed(AppRoutes.home);
+                          },
+                          text: 'Pay',
+                          color: Colors.white,
+                          img: 'assets/images/apple1.png')),
                 ),
-                Expanded(
-                  flex: 1,
-                  child: Center(
-                      child: Text(
-                          'Or pay with card',
-                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          ))),),
-                const Expanded(
-                  flex: 1,
-                  child: Divider(color: Colors.white54),
+                const SizedBox(
+                  height: 20,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 24, right: 24),
+                  child: Row(
+                    children: [
+                      const Expanded(
+                        flex: 1,
+                        child: Divider(color: Colors.white54),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Center(
+                            child: Text('Or pay with card',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.copyWith())),
+                      ),
+                      const Expanded(
+                        flex: 1,
+                        child: Divider(color: Colors.white54),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 24, right: 24, top: 20),
+                  child: _formTextCard(),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 20, right: 20),
+                  child: LoadingButton(
+                    text: '\$ 123.32',
+                    onPressed: () async {
+                      final card = CardDetails(
+                        number: numberCard.text,
+                        cvc: cvc.text,
+                        expirationMonth: expirationMonth,
+                        expirationYear: expirationYear,
+                      );
+
+                      final billingDetails = BillingDetails(
+                        email: emailController.text,
+                        name: nameCardController.text,
+                        phone: '+84374735275',
+                        address: const Address(
+                          city: 'Da Nang',
+                          country: 'VN',
+                          line1: '381 Tran Hung Dao',
+                          line2: '',
+                          state: 'Ngu Hanh Son',
+                          postalCode: '50000',
+                        ),
+                      );
+                      context.read<CardBloc>().add(PaymentCreateIntent(
+                          billingDetails: billingDetails, card: card));
+                    },
+                    color: Colors.white54,
+                    img: null,
+                  ),
+                ),
+                const SizedBox(
+                  height: 60,
+                ),
+                Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text('Powered by',
+                            style: Theme.of(context).textTheme.bodyMedium),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        Text('Stripe',
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline6
+                                ?.copyWith(color: Colors.white, fontSize: 20)),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('Terms',
+                            style: Theme.of(context).textTheme.bodyMedium),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        Text('Privacy',
+                            style: Theme.of(context).textTheme.bodyMedium),
+                      ],
+                    )
+                  ],
+                ),
+                const SizedBox(
+                  height: 60,
                 ),
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 24, right: 24, top: 20),
-            child: _formTextCard(),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 20, right: 20),
-            child: LoadingButton(
-              text: '\$ 123.32',
-              onPressed: _handlePayPress,
-              color: Colors.white54,
-              img: null,
-            ),
-          ),
-          const SizedBox(
-            height: 60,
-          ),
-          Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text('Powered by', style: Theme.of(context).textTheme.bodyMedium),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  Text(
-                      'Stripe',
-                      style: Theme.of(context).textTheme.headline6?.copyWith(
-                        color: Colors.white,
-                        fontSize: 20
-                      )
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('Terms', style: Theme.of(context).textTheme.bodyMedium),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  Text('Privacy', style: Theme.of(context).textTheme.bodyMedium),
-                ],
-              )
-            ],
-          ),
-          const SizedBox(
-            height: 60,
-          ),
+          widget.keyShow
+              ? Container()
+              : Container(
+                  color: Colors.black26,
+                  height: 600,
+                ),
         ],
       ),
     );
-  }
-
-  Future<void> _handlePayPress() async {
-    await Stripe.instance.dangerouslyUpdateCardDetails(_card);
-    try {
-      final billingDetails = BillingDetails(
-        email: emailController.text,
-        name: nameCardController.text,
-        phone: '+84374735275',
-        address: const Address(
-          city: 'Da Nang',
-          country: 'VN',
-          line1: '381 Tran Hung Dao',
-          line2: '',
-          state: 'Ngu Hanh Son',
-          postalCode: '50000',
-        ),
-      ); // mocked data for tests
-
-      // 2. Create payment method
-      final paymentMethod = await Stripe.instance.createPaymentMethod(
-          params: PaymentMethodParams.card(
-            paymentMethodData: PaymentMethodData(
-              billingDetails: billingDetails,
-            ),
-          ));
-
-      // 3. call API to create PaymentIntent
-      final paymentIntentResult =
-      await cardServices.callNoWebhookPayEndpointMethodId(
-        useStripeSdk: true,
-        paymentMethodId: paymentMethod.id,
-        currency: 'usd', // mocked data
-        items: [
-          'id-1',
-        ], price: 12,
-      );
-
-      if (paymentIntentResult['error'] != null) {
-        // Error during creating or confirming Intent
-        print('Error1: ${paymentIntentResult['error']}');
-        return;
-      }
-      if (paymentIntentResult['clientSecret'] != null &&
-          paymentIntentResult['requiresAction'] == null) {
-        print('Success!: The payment was confirmed successfully!');
-        return;
-      }
-      if (paymentIntentResult['clientSecret'] != null &&
-          paymentIntentResult['requiresAction'] == true) {
-        // 4. if payment requires action calling handleNextAction
-        final paymentIntent = await Stripe.instance
-            .handleNextAction(paymentIntentResult['clientSecret']);
-
-        if (paymentIntent.status == PaymentIntentsStatus.RequiresConfirmation) {
-          // 5. Call API to confirm intent
-          await confirmIntent(paymentIntent.id);
-        } else {
-          print('Error2: ${paymentIntentResult['error']}');
-        }
-      }
-    } catch (e) {
-      print('Error: $e');
-      rethrow;
-    }
-  }
-
-  Future<void> confirmIntent(String paymentIntentId) async {
-    final result = await cardServices.callNoWebhookPayEndpointIntentId(
-        paymentIntentId: paymentIntentId);
-    if (result['error'] != null) {
-      print('Error: ${result['error']}');
-    } else {
-      print('Success!: The payment was confirmed successfully!');
-    }
   }
 
   Widget _formTextCard() {
@@ -275,21 +251,14 @@ class _CardDetailState extends State<CardDetail> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Number Card',
-            style: Theme.of(context).textTheme.headline6
-        ),
+        Text('Number Card', style: Theme.of(context).textTheme.headline6),
         const SizedBox(
           height: 10,
         ),
         SizedBox(
           // height: 50,
           child: TextFormField(
-            onChanged: (number) {
-              setState(() {
-                _card = _card.copyWith(number: number);
-              });
-            },
+            controller: numberCard,
             keyboardType: TextInputType.number,
             inputFormatters: [
               FilteringTextInputFormatter.digitsOnly,
@@ -299,7 +268,10 @@ class _CardDetailState extends State<CardDetail> {
             decoration: InputDecoration(
                 contentPadding: const EdgeInsets.only(left: 10),
                 hintText: '1234 1234 1234 1234',
-                hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.white54),
+                hintStyle: Theme.of(context)
+                    .textTheme
+                    .bodyMedium
+                    ?.copyWith(color: Colors.white54),
                 suffixIcon: Padding(
                   padding: const EdgeInsets.all(15.0),
                   child: SizedBox(
@@ -369,7 +341,7 @@ class _CardDetailState extends State<CardDetail> {
                         _card = _card.copyWith(
                             expirationMonth: int.tryParse(format
                                 .getExpirationFromTextField(number,
-                                type: 'month')
+                                    type: 'month')
                                 .toString()),
                             expirationYear: int.tryParse(format
                                 .getExpirationFromTextField(number)
@@ -386,7 +358,10 @@ class _CardDetailState extends State<CardDetail> {
                     decoration: InputDecoration(
                         contentPadding: const EdgeInsets.only(left: 10),
                         hintText: 'MM/YY',
-                        hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.white54),
+                        hintStyle: Theme.of(context)
+                            .textTheme
+                            .bodyMedium
+                            ?.copyWith(color: Colors.white54),
                         border: const OutlineInputBorder(
                             borderRadius: BorderRadius.only(
                                 bottomLeft: Radius.circular(8.0)))),
@@ -407,7 +382,10 @@ class _CardDetailState extends State<CardDetail> {
                     decoration: InputDecoration(
                         contentPadding: const EdgeInsets.only(left: 10),
                         hintText: 'CVC',
-                        hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.white54),
+                        hintStyle: Theme.of(context)
+                            .textTheme
+                            .bodyMedium
+                            ?.copyWith(color: Colors.white54),
                         suffixIcon: Padding(
                           padding: const EdgeInsets.all(15.0),
                           child: SizedBox(
@@ -522,7 +500,10 @@ class _CardDetailState extends State<CardDetail> {
             decoration: InputDecoration(
                 contentPadding: const EdgeInsets.only(left: 10),
                 hintText: 'ZIP',
-                hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.white54),
+                hintStyle: Theme.of(context)
+                    .textTheme
+                    .bodyMedium
+                    ?.copyWith(color: Colors.white54),
                 border: const OutlineInputBorder(
                     borderRadius: BorderRadius.only(
                         bottomRight: Radius.circular(8.0),

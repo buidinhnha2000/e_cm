@@ -12,7 +12,6 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is LogOutState) {
@@ -38,7 +37,6 @@ class ProfileScreen extends StatelessWidget {
               height: 5,
             ),
             ProfileFunction(),
-
           ],
         ),
       )

@@ -28,6 +28,10 @@ class _CartProductsState extends State<CartProducts> {
                 future: secureStorage.getUserId(),
                 builder: (context, snapshotUserId) {
                   if (snapshotUserId.hasData && snapshotUserId.data != null) {
+                    var total = 0.0;
+                    snapshot.data?.forEach((element) {
+                      total = total + (element.quantity!.toDouble() * element.product!.price);
+                    });
                     return ListView.builder(
                         physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
@@ -131,12 +135,12 @@ class _CartProductsState extends State<CartProducts> {
                                                                             index]
                                                                         .quantity! -
                                                                     1));
-                                                            context
-                                                                .read<
-                                                                    ProductBloc>()
-                                                                .add(
-                                                                    IncrementQuantityProductEvent(
-                                                                        cart));
+                                                            setState(() {
+                                                              context.read<ProductBloc>()
+                                                                  .add(
+                                                                  IncrementQuantityProductEvent(
+                                                                      cart));
+                                                            });
                                                           },
                                                           icon: const Icon(
                                                             Icons.remove,

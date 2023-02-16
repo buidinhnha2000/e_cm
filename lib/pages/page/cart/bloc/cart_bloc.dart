@@ -22,6 +22,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       final datasource = GetDataSource();
       final carts = await datasource.getCart();
       final userId = await secureStorage.getUserId();
+      final country = await secureStorage.getCountry();
       var amount = 0;
       double totalCard = 0;
       final total = carts.map((cart) {
@@ -38,7 +39,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
           .toList();
       if (userId != null) {
         final order = await cartServices.addProductToOrder(
-            userId, products, amount, "Quang Tri");
+            userId, products, amount, country!);
 
         emit(SuccessCartState(order));
       }else{

@@ -33,6 +33,5 @@ class ProductServices {
 
     return Cart.fromJson(resp.data);
   }
-
 }
 final productServices = ProductServices();

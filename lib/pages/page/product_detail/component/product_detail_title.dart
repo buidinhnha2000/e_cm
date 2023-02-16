@@ -114,12 +114,15 @@ class _ProductDetailTitleState extends State<ProductDetailTitle> {
                                 .toList())
                             .map((size) => Padding(
                                   padding: const EdgeInsets.only(right: 10),
-                                  child: OutlinedButton(
-                                      onPressed: () {
-                                        Navigator.of(context)
-                                            .pushNamed(AppRoutes.categories);
-                                      },
-                                      child: Text(size)),
+                                  child: SizedBox(
+                                    height: 30,
+                                    child: OutlinedButton(
+                                        onPressed: () {
+                                          Navigator.of(context)
+                                              .pushNamed(AppRoutes.categories);
+                                        },
+                                        child: Text(size)),
+                                  ),
                                 )))),
                     Row(
                       children: [
@@ -158,12 +161,11 @@ class _ProductDetailTitleState extends State<ProductDetailTitle> {
                       secondHalf.isEmpty ? Text(firstHalf) : Column(
                         children: [
                           Text(flag ? ("$firstHalf . . .") : (firstHalf + secondHalf)),
-                          InkWell(
+                          GestureDetector(
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                Text(flag ? "Show more" : "Show less", style:  TextStyle(color: Colors.blueAccent),),
-
+                                Text(flag ? "Show more" : "Show less", style:  const TextStyle(color: Colors.blueAccent),),
                               ],
                             ),
                             onTap: () {

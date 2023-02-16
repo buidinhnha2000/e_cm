@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import '../../../../data/model/product/product.dart';
 import '../../../../data/model/rating/rating.dart';
+import 'package:intl/intl.dart';
 
 final ratingGet = GetDataSource();
 
@@ -22,22 +23,24 @@ class ProductReviewProductDetail extends StatefulWidget {
 class _ProductReviewProductDetailState
     extends State<ProductReviewProductDetail> {
   late TextEditingController response;
-  late double rating;
+  var rating = 0.0;
 
   @override
   void initState() {
     response = TextEditingController();
-    rating = 0.0;
     super.initState();
+  }
+
+  void clearRespone() {
+    FocusScope.of(context).unfocus();
+    response.clear();
   }
 
   @override
   Widget build(BuildContext context) {
-
     final ratingBloc = BlocProvider.of<ProductBloc>(context);
     IconData? selectedIcon;
     final productId = widget.products.productId;
-
     return Column(
       children: [
         Container(
@@ -69,6 +72,7 @@ class _ProductReviewProductDetailState
                           shrinkWrap: true,
                           itemCount: snapshot.data?.length ?? 0,
                           itemBuilder: (context, index) {
+                            DateTime? date = snapshot.data?[index].createdAt;
                             return Padding(
                               padding:
                                   const EdgeInsets.only(bottom: 10, top: 10),
@@ -83,7 +87,9 @@ class _ProductReviewProductDetailState
                                         width: 50,
                                         child: CircleAvatar(
                                           backgroundImage: AssetImage(
-                                              'assets/images/image4.jpg'),
+                                              'assets/images/user2.png'),
+                                          backgroundColor: Colors.white,
+                                          foregroundColor: Colors.amber,
                                         ),
                                       ),
                                       const SizedBox(
@@ -105,6 +111,7 @@ class _ProductReviewProductDetailState
                                             height: 5,
                                           ),
                                           Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
                                               RatingBarIndicator(
                                                 rating: snapshot
@@ -119,13 +126,11 @@ class _ProductReviewProductDetailState
                                                 itemSize: 20.0,
                                                 direction: Axis.horizontal,
                                               ),
-                                              const SizedBox(
-                                                width: 30,
-                                              ),
+                                              const SizedBox(width: 90,),
                                               Text(
-                                                '${snapshot.data![index].createdAt}',
+                                                DateFormat('HH:mm - dd-MM-yyyy').format(date!),
                                                 style: const TextStyle(
-                                                    color: Colors.white60),
+                                                    color: Colors.redAccent),
                                               )
                                             ],
                                           ),
@@ -197,7 +202,9 @@ class _ProductReviewProductDetailState
                       color: Colors.amber,
                     ),
                     onRatingUpdate: (value) {
-                      // rating = value.toInt();
+                      setState(() {
+                        rating = value.toDouble();
+                      });
                     },
                   )
                 ],
@@ -206,6 +213,7 @@ class _ProductReviewProductDetailState
                 padding: const EdgeInsets.only(left: 10, right: 10),
                 child: TextField(
                   controller: response,
+
                 ),
               ),
               const SizedBox(
@@ -230,6 +238,7 @@ class _ProductReviewProductDetailState
                               response.text.trim(),
                               rating.toInt()));
                         }
+                        clearRespone();
                       },
                       child: const Text("Send",
                           style: TextStyle(color: Colors.blue, fontSize: 15)),

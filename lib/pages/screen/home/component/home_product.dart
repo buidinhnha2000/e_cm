@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_cm/app/navigator/router.dart';
 import 'package:e_cm/data/network/remote.dart';
 import 'package:flutter/material.dart';
-
 import '../../../../data/model/product/product.dart';
 
 final product = GetDataSource();
@@ -12,6 +11,7 @@ class HomeProduct extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     final size = MediaQuery
         .of(context)
         .size;

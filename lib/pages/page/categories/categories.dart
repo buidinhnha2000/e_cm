@@ -126,7 +126,7 @@ class _CategoriesState extends State<Categories>
                                             ),
                                           ),
                                           const SizedBox(
-                                            height: 5,
+                                            height: 2,
                                           ),
                                           Text(
                                             snapshot.data![index].title,
@@ -134,7 +134,7 @@ class _CategoriesState extends State<Categories>
                                                 color: Colors.red),
                                           ),
                                           const SizedBox(
-                                            height: 10,
+                                            height: 5,
                                           ),
                                           Row(
                                             mainAxisAlignment:
@@ -214,7 +214,7 @@ class _CategoriesState extends State<Categories>
                                       color: Colors.red),
                                 ),
                                 const SizedBox(
-                                  height: 10,
+                                  height: 5,
                                 ),
                                 Row(
                                   mainAxisAlignment:
@@ -258,7 +258,7 @@ class _CategoriesState extends State<Categories>
                                       color: Colors.red),
                                 ),
                                 const SizedBox(
-                                  height: 10,
+                                  height: 5,
                                 ),
                                 Row(
                                   mainAxisAlignment:
@@ -319,7 +319,7 @@ class _CategoriesState extends State<Categories>
                                       color: Colors.red),
                                 ),
                                 const SizedBox(
-                                  height: 10,
+                                  height: 5,
                                 ),
                                 Row(
                                   mainAxisAlignment:
@@ -363,7 +363,7 @@ class _CategoriesState extends State<Categories>
                                       color: Colors.red),
                                 ),
                                 const SizedBox(
-                                  height: 10,
+                                  height: 5,
                                 ),
                                 Row(
                                   mainAxisAlignment:
@@ -424,7 +424,7 @@ class _CategoriesState extends State<Categories>
                                       color: Colors.red),
                                 ),
                                 const SizedBox(
-                                  height: 10,
+                                  height: 5,
                                 ),
                                 Row(
                                   mainAxisAlignment:
@@ -468,7 +468,7 @@ class _CategoriesState extends State<Categories>
                                       color: Colors.red),
                                 ),
                                 const SizedBox(
-                                  height: 10,
+                                  height: 5,
                                 ),
                                 Row(
                                   mainAxisAlignment:
@@ -529,7 +529,7 @@ class _CategoriesState extends State<Categories>
                                       color: Colors.red),
                                 ),
                                 const SizedBox(
-                                  height: 10,
+                                  height: 5,
                                 ),
                                 Row(
                                   mainAxisAlignment:
@@ -573,7 +573,7 @@ class _CategoriesState extends State<Categories>
                                       color: Colors.red),
                                 ),
                                 const SizedBox(
-                                  height: 10,
+                                  height: 5,
                                 ),
                                 Row(
                                   mainAxisAlignment:
@@ -634,7 +634,7 @@ class _CategoriesState extends State<Categories>
                                       color: Colors.red),
                                 ),
                                 const SizedBox(
-                                  height: 10,
+                                  height: 5,
                                 ),
                                 Row(
                                   mainAxisAlignment:
@@ -678,7 +678,7 @@ class _CategoriesState extends State<Categories>
                                       color: Colors.red),
                                 ),
                                 const SizedBox(
-                                  height: 10,
+                                  height: 5,
                                 ),
                                 Row(
                                   mainAxisAlignment:

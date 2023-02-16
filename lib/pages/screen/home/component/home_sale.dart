@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_cm/data/network/remote.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import '../../../../app/navigator/router.dart';
 import '../../../../data/model/product/product.dart';
 
 final product = GetDataSource();
@@ -13,6 +15,12 @@ class HomeSale extends StatefulWidget {
 }
 
 class _HomeSaleState extends State<HomeSale> {
+
+  routeDetail(Product product) {
+    Navigator.of(context)
+        .pushNamed(AppRoutes.productDetail, arguments: product);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -61,7 +69,7 @@ class _HomeSaleState extends State<HomeSale> {
                   height: 190,
                   width: MediaQuery.of(context).size.width,
                   child: FutureBuilder<List<Product>>(
-                    future: product.getProduct(),
+                    future: product.getProductRecommenderId(),
                     builder: (BuildContext context, snapshot) {
                       if(snapshot.hasData && snapshot.data != null) {
                         return ListView.builder(
@@ -70,7 +78,9 @@ class _HomeSaleState extends State<HomeSale> {
                           itemCount: snapshot.data?.length ?? 0,
                           itemBuilder: (context, index) {
                             return GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                routeDetail(snapshot.data![index]);
+                              },
                               child: Container(
                                 padding: const EdgeInsets.only(
                                   left: 10,
@@ -92,9 +102,19 @@ class _HomeSaleState extends State<HomeSale> {
                                     const SizedBox(
                                       height: 5,
                                     ),
-                                    Text(
-                                      "${snapshot.data![index].price} \$",
-                                      style: const TextStyle(color: Colors.pink),
+                                    // Text(
+                                    //   "${snapshot.data![index].rating} \$",
+                                    //   style: const TextStyle(color: Colors.pink),
+                                    // ),
+                                    RatingBarIndicator(
+                                      rating: snapshot.data![index].rating!.toDouble(),
+                                      itemBuilder: (context, index) => const Icon(
+                                        Icons.star,
+                                        color: Colors.amber,
+                                      ),
+                                      itemCount: 5,
+                                      itemSize: 20.0,
+                                      direction: Axis.horizontal,
                                     ),
                                   ],
                                 ),

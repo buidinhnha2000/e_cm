@@ -1,16 +1,25 @@
 part of 'card_bloc.dart';
 
 @immutable
-abstract class CardEvent {}
+abstract class CardEvent extends BaseState{}
 
-class CardAddEvent extends CardEvent {
-  final String email;
-  final int numberCard;
-  final String dateExpiry;
-  final int cvc;
-  final String nameCard;
-  final String city;
-  final int zip;
+class PaymentCreateMethod extends CardEvent {
+  final CardDetails card;
 
-  CardAddEvent(this.email, this.numberCard, this.dateExpiry, this.cvc, this.nameCard, this.city, this.zip);
+  PaymentCreateMethod(this.card);
+
+  @override
+  List<Object?> get props => [card];
 }
+
+class PaymentCreateIntent extends CardEvent {
+  final BillingDetails billingDetails;
+  final CardDetails card;
+
+  PaymentCreateIntent({required this.billingDetails, required this.card});
+
+  @override
+  List<Object?> get props => [billingDetails, card];
+
+}
+

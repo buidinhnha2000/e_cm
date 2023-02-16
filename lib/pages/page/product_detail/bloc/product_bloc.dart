@@ -24,12 +24,12 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
 
   Future<void> _addProductToCart( OnAddProductToCartEvent event, Emitter<ProductState> emit ) async {
     final cart = await productServices.addProductToCart(event.cart.userId, event.cart.productId);
-    emit(SetAddProductToCartState(carts: carts, amount: cart.quantity!.toInt()));
+    emit(SetAddProductToCartState(carts: carts, amount: cart.quantity?.toInt() ?? 0));
   }
 
   Future<void> _purchaseProductToCart( OnPurchaseProductToCartEvent event, Emitter<ProductState> emit ) async {
     final cart = await productServices.addProductToCart(event.cart.userId, event.cart.productId);
-    emit(SetPurchaseProductToCartState(carts: carts, amount: cart.quantity!.toInt()));
+    emit(SetPurchaseProductToCartState(carts: carts, amount: cart.quantity?.toInt() ?? 0));
   }
 
   Future<void> _deleteProductToCart (OnDeleteProductToCartEvent event, Emitter<ProductState> emit) async {
@@ -41,8 +41,9 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
 
     final datasource = GetDataSource();
     final _cart = datasource.getCart();
+
     final cart = await productServices.updateProductToCart(event.cart.userId, event.cart.productId);
-    emit(SetIncrementProductState(carts: carts, amount: cart.quantity!.toInt()));
+    emit(SetIncrementProductState(carts: carts, amount: (cart.quantity!.toInt() - 1)));
   }
 
   Future<void> _decrementQuantityProduct( DecrementQuantityProductEvent event, Emitter<ProductState> emit ) async {
