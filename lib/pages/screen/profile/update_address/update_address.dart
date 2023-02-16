@@ -21,9 +21,11 @@ class _UpdateAddressState extends State<UpdateAddress> {
   late TextEditingController _email;
   late TextEditingController _phone;
   late TextEditingController _address;
-  late TextEditingController _country;
-  late TextEditingController _city;
 
+  // late TextEditingController _country;
+  // late TextEditingController _city;
+  late String _country;
+  late String _city;
   String countryValue = "";
   String? stateValue = "";
   String? cityValue = "";
@@ -34,8 +36,8 @@ class _UpdateAddressState extends State<UpdateAddress> {
     _email = TextEditingController();
     _phone = TextEditingController();
     _address = TextEditingController();
-    _country = TextEditingController();
-    _city = TextEditingController();
+    _country = 'Viet Nam';
+    _city = 'Da Nang';
     super.initState();
   }
 
@@ -46,7 +48,6 @@ class _UpdateAddressState extends State<UpdateAddress> {
     return BlocListener<UpdateAddressBloc, UpdateAddressState>(
       listener: (context, state) {
         if (state is LoadingAddressState) {
-
         } else if (state is FailureAddressState) {
           Navigator.of(context).pushNamed(AppRoutes.addressList);
         } else if (state is SuccessAddressState) {
@@ -82,7 +83,8 @@ class _UpdateAddressState extends State<UpdateAddress> {
                   TextFormFrave(
                     controller: _name,
                     hintText: 'Full name',
-                    prefixIcon: const Icon(Icons.drive_file_rename_outline_outlined),
+                    prefixIcon:
+                        const Icon(Icons.drive_file_rename_outline_outlined),
                   ),
                 ],
               ),
@@ -100,11 +102,11 @@ class _UpdateAddressState extends State<UpdateAddress> {
                     height: 5,
                   ),
                   TextFormFrave(
-                      controller: _email,
-                      hintText: 'Email Address',
-                      keyboardType: TextInputType.emailAddress,
-                      prefixIcon: const Icon(Icons.email_outlined),
-                      validator: validatedEmail,
+                    controller: _email,
+                    hintText: 'Email Address',
+                    keyboardType: TextInputType.emailAddress,
+                    prefixIcon: const Icon(Icons.email_outlined),
+                    validator: validatedEmail,
                   ),
                 ],
               ),
@@ -139,7 +141,9 @@ class _UpdateAddressState extends State<UpdateAddress> {
                     "Country :",
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
                   ),
-                  const SizedBox(height: 5,),
+                  const SizedBox(
+                    height: 5,
+                  ),
                   CSCPicker(
                     layout: Layout.horizontal,
                     onCountryChanged: (country) {
@@ -207,17 +211,16 @@ class _UpdateAddressState extends State<UpdateAddress> {
                       ),
                       onPressed: () async {
                         final userId = await secureStorage.getUserId();
-                        if(userId!.isNotEmpty == true) {
+                        if (userId!.isNotEmpty == true) {
                           updateAddressBloc.add(OnUpdateAddressEvent(
                             userId,
                             _name.text.trim(),
                             _email.text.trim(),
                             int.parse(_phone.text),
                             _address.text.trim(),
-                            _country.text.trim(),
-                            _city.text.trim(),
-                          )
-                          );
+                            _country.trim(),
+                            _city.trim(),
+                          ));
                         }
                       },
                       child: const Center(

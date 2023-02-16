@@ -1,4 +1,3 @@
-import 'package:e_cm/data/model/product/product.dart';
 import 'package:e_cm/data/model/product/product_order.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -10,13 +9,11 @@ part 'order.g.dart';
 class Order with _$Order {
   @JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
   const factory Order({
-    @JsonKey(name: '_id') required String orderId,
-    required Product products,
-    required ProductOrder productOrders,
-    required String userId,
-    required int amount,
-    required String address,
-    required String status,
+    required String? userId,
+    required ProductOrder products,
+    required int? amount,
+    required Object? address,
+    required String? status,
   }) = _Order;
   
   

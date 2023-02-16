@@ -8,11 +8,9 @@ part 'product_order.g.dart';
 class ProductOrder with _$ProductOrder {
   @JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
   const factory ProductOrder({
-    required String productId,
-    required int quantity,
+    required String? productId,
+    required int? quantity,
   }) = _ProductOrder;
-
-
 
   factory ProductOrder.fromJson(Map<String, dynamic> json) =>
       _$ProductOrderFromJson(json);

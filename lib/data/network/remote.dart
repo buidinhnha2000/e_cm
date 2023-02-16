@@ -13,6 +13,7 @@ import '../model/categories/categories.dart';
 import '../model/product/product.dart';
 
 class GetDataSource extends DataSource {
+
   @override
   Future<List<Movie>> getMovie() async {
     try {
@@ -52,6 +53,22 @@ class GetDataSource extends DataSource {
     }
   }
 
+  @override
+  Future<List<Order>> getOrder() async {
+    try {
+      final userId = await secureStorage.getUserId();
+      final response1 = await dio.get('${URLS.urlApi}/orders/find/$userId');
+      final List<dynamic> jsonOrder = response1.data as List<dynamic>;
+      final orders = jsonOrder.map((e) => Order.fromJson(e)).toList();
+      print('ht $orders');
+      return orders;
+    } on Error catch (e) {
+      print(e.stackTrace);
+      rethrow;
+    }
+  }
+
+  @override
   Future<List<Rating>> getRating({required String productId}) async {
     try {
       final response = await dio.get('${URLS.urlApi}/rating/find/$productId');
@@ -75,18 +92,6 @@ class GetDataSource extends DataSource {
     }
   }
 
-  Future<List<Order>> getOrder() async {
-    try {
-      final response = await dio.get('${URLS.urlApi}/orders');
-      final List<dynamic> jsonOrder = response.data as List<dynamic>;
-      final orders = jsonOrder.map((e) => Order.fromJson(e)).toList();
-      return orders;
-    } catch (e) {
-      print(e);
-      rethrow;
-    }
-  }
-
 // ID
   @override
   Future<List<Cart>> getCart() async {
@@ -102,6 +107,7 @@ class GetDataSource extends DataSource {
     }
   }
 
+  @override
   Future<List<Product>> getProductId() async {
     try {
       final productId = await secureStorage.getUserId();
@@ -115,6 +121,7 @@ class GetDataSource extends DataSource {
     }
   }
 
+  @override
   Future<List<Address>> getAddressId() async {
     try {
       final userId = await secureStorage.getUserId();
@@ -128,6 +135,7 @@ class GetDataSource extends DataSource {
     }
   }
 
+  @override
   Future<List<Payment>> getPaymentId() async {
     try{
       final userId = await secureStorage.getUserId();

@@ -131,12 +131,12 @@ class _CartProductsState extends State<CartProducts> {
                                                                             index]
                                                                         .quantity! -
                                                                     1));
-                                                            context
-                                                                .read<
-                                                                    ProductBloc>()
-                                                                .add(
-                                                                    IncrementQuantityProductEvent(
-                                                                        cart));
+                                                            setState(() {
+                                                              context.read<ProductBloc>()
+                                                                  .add(
+                                                                  IncrementQuantityProductEvent(
+                                                                      cart));
+                                                            });
                                                           },
                                                           icon: const Icon(
                                                             Icons.remove,

@@ -31,70 +31,68 @@ class _ProductDetailBottomState extends State<ProductDetailBottom> {
         }
       },
       child: BottomAppBar(
-        child: Container(
-          color: Colors.black87,
-          height: 60,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: 40,
-                width: 170,
-                child: OutlinedButton(
-                  style: OutlinedButton.styleFrom(
-                    side: const BorderSide(width: 1, color: Colors.blueAccent),
-                  ),
-                  onPressed: () async {
-                    final cart = CartProduct(
-                      userId: await secureStorage.getUserId(),
-                      productId: widget.product.productId,
-                      quantity: 1,
-                    );
-                    context.read<ProductBloc>().add(OnAddProductToCartEvent(cart));
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Icon(Icons.shopping_cart_outlined,
-                          color: Colors.blueAccent),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Text("Add Cart",
-                          style:
-                              TextStyle(color: Colors.blueAccent, fontSize: 15))
-                    ],
-                  ),
+        height: 70,
+        color: Colors.black,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: 40,
+              width: 170,
+              child: OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                  side: const BorderSide(width: 1, color: Colors.blueAccent),
+                ),
+                onPressed: () async {
+                  final cart = CartProduct(
+                    userId: await secureStorage.getUserId(),
+                    productId: widget.product.productId,
+                    quantity: 1,
+                  );
+                  context.read<ProductBloc>().add(OnAddProductToCartEvent(cart));
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Icon(Icons.shopping_cart_outlined,
+                        color: Colors.blueAccent),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Text("Add Cart",
+                        style:
+                            TextStyle(color: Colors.blueAccent, fontSize: 15))
+                  ],
                 ),
               ),
-              const SizedBox(
-                width: 10,
-              ),
-              SizedBox(
-                height: 40,
-                width: 170,
-                child: OutlinedButton(
-                    style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStatePropertyAll(Colors.redAccent[400])),
-                    onPressed: () async {
-                      final cart = CartProduct(
-                          userId: await secureStorage.getUserId(),
-                          productId: widget.product.productId,
-                          quantity: 1);
-                      context
-                          .read<ProductBloc>()
-                          .add(OnPurchaseProductToCartEvent(cart));
-                    },
-                    child: const Center(
-                      child: Text(
-                        'Purchase',
-                        style: TextStyle(fontSize: 15, color: Colors.white),
-                      ),
-                    )),
-              )
-            ],
-          ),
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            SizedBox(
+              height: 40,
+              width: 170,
+              child: OutlinedButton(
+                  style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStatePropertyAll(Colors.redAccent[400])),
+                  onPressed: () async {
+                    final cart = CartProduct(
+                        userId: await secureStorage.getUserId(),
+                        productId: widget.product.productId,
+                        quantity: 1);
+                    context
+                        .read<ProductBloc>()
+                        .add(OnPurchaseProductToCartEvent(cart));
+                  },
+                  child: const Center(
+                    child: Text(
+                      'Purchase',
+                      style: TextStyle(fontSize: 15, color: Colors.white),
+                    ),
+                  )),
+            )
+          ],
         ),
       ),
     );

@@ -1,3 +1,5 @@
+import 'package:e_cm/data/model/order/order.dart';
+import 'package:e_cm/data/network/helper/secure_storage.dart';
 import 'package:e_cm/data/network/remote.dart';
 import 'package:e_cm/l10n/l10n.dart';
 import 'package:flutter/material.dart';
@@ -21,28 +23,36 @@ class ProfileOrderHistory extends StatelessWidget {
             style: const TextStyle(color: Colors.white, fontSize: 23),
           ),
         ),
-        body: SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: DataTable(columns: const [
-            DataColumn(
-              label: Text(
-                "STT",
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
-              ),
-            ),
-            DataColumn(
-              label: Text(
-                "ID",
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
-              ),
-            ),
-            DataColumn(
-              label: Text(
-                "Amount",
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
-              ),
-            )
-          ], rows: []),
+        body: Container(
+          height: 2000,
+          child: FutureBuilder<List<Order>>(
+              future: GetDataSource().getOrder(),
+              builder: (context, snapshot) {
+                return FutureBuilder<String?>(
+                    future: secureStorage.getUserId(),
+                    builder: (context, snapshotUserId) {
+                      if(snapshot.hasData && snapshot.data != null) {
+                        return ListView.builder(
+                            shrinkWrap: true,
+                            scrollDirection: Axis.vertical,
+                            itemCount: snapshot.data?.length ?? 0,
+                            itemBuilder: (context, index) {
+                              return Text(
+                                '${snapshot.data![index].amount}',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge
+                                    ?.copyWith(
+                                    color: Colors.white
+                                ),
+                              );
+                            });
+                      }
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    });
+              }),
         ));
   }
 }

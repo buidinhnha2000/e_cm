@@ -41,8 +41,9 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
 
     final datasource = GetDataSource();
     final _cart = datasource.getCart();
+
     final cart = await productServices.updateProductToCart(event.cart.userId, event.cart.productId);
-    emit(SetIncrementProductState(carts: carts, amount: cart.quantity!.toInt()));
+    emit(SetIncrementProductState(carts: carts, amount: (cart.quantity!.toInt() - 1)));
   }
 
   Future<void> _decrementQuantityProduct( DecrementQuantityProductEvent event, Emitter<ProductState> emit ) async {

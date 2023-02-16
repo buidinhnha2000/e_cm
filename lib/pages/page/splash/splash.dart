@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:e_cm/data/network/helper/secure_storage.dart';
 import 'package:flutter/material.dart';
 
 import '../../../app/navigator/router.dart';
@@ -14,8 +15,14 @@ class _SplashState extends State<Splash> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 3), () {
-      Navigator.of(context).pushNamed(AppRoutes.login);
+    Timer(const Duration(seconds: 3), () async{
+      final userId = await secureStorage.getUserId();
+      if(userId != null) {
+        Navigator.of(context).pushNamed(AppRoutes.screen);
+      }
+      else {
+        Navigator.of(context).pushNamed(AppRoutes.login);
+      }
     });
   }
 

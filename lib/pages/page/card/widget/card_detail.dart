@@ -47,107 +47,112 @@ class _CardDetailState extends State<CardDetail> {
   @override
   Widget build(BuildContext context) {
     // final cardBloc = BlocProvider.of<CardBloc>(context);
-    return Container(
-      color: widget.keyShow ? Colors.black : Colors.white38,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 24, right: 24, top: 20),
-            child: SizedBox(
-                height: 50,
-                child: LoadingButton(
-                    onPressed: () {
-                      return Navigator.of(context).pushNamed(AppRoutes.home);
-                    },
-                    text: 'Pay',
-                    color: Colors.white,
-                    img: 'assets/images/apple1.png')),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 24, right: 24),
-            child: Row(
-              children: [
-                const Expanded(
-                  flex: 1,
-                  child: Divider(color: Colors.white54),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Center(
-                      child: Text(
-                          'Or pay with card',
-                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          ))),),
-                const Expanded(
-                  flex: 1,
-                  child: Divider(color: Colors.white54),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 24, right: 24, top: 20),
-            child: _formTextCard(),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 20, right: 20),
-            child: LoadingButton(
-              text: '\$ 123.32',
-              onPressed: _handlePayPress,
-              color: Colors.white54,
-              img: null,
-            ),
-          ),
-          const SizedBox(
-            height: 60,
-          ),
-          Column(
+    return Stack(
+      children: [
+        Container(
+          color: Colors.white24,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text('Powered by', style: Theme.of(context).textTheme.bodyMedium),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  Text(
-                      'Stripe',
-                      style: Theme.of(context).textTheme.headline6?.copyWith(
+              Padding(
+                padding: const EdgeInsets.only(left: 24, right: 24, top: 20),
+                child: SizedBox(
+                    height: 50,
+                    child: LoadingButton(
+                        onPressed: () {
+                          return Navigator.of(context).pushNamed(AppRoutes.home);
+                        },
+                        text: 'Pay',
                         color: Colors.white,
-                        fontSize: 20
-                      )
+                        img: 'assets/images/apple1.png')),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 24, right: 24),
+                child: Row(
+                  children: [
+                    const Expanded(
+                      flex: 1,
+                      child: Divider(color: Colors.white54),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: Center(
+                          child: Text(
+                              'Or pay with card',
+                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              ))),),
+                    const Expanded(
+                      flex: 1,
+                      child: Divider(color: Colors.white54),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 24, right: 24, top: 20),
+                child: _formTextCard(),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 20, right: 20),
+                child: LoadingButton(
+                  text: '\$ 123.32',
+                  onPressed: _handlePayPress,
+                  color: Colors.white54,
+                  img: null,
+                ),
+              ),
+              const SizedBox(
+                height: 60,
+              ),
+              Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text('Powered by', style: Theme.of(context).textTheme.bodyMedium),
+                      const SizedBox(
+                        width: 20,
+                      ),
+                      Text(
+                          'Stripe',
+                          style: Theme.of(context).textTheme.headline6?.copyWith(
+                            color: Colors.white,
+                            fontSize: 20
+                          )
+                      ),
+                    ],
                   ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('Terms', style: Theme.of(context).textTheme.bodyMedium),
+                      const SizedBox(
+                        width: 20,
+                      ),
+                      Text('Privacy', style: Theme.of(context).textTheme.bodyMedium),
+                    ],
+                  )
                 ],
               ),
               const SizedBox(
-                height: 10,
+                height: 60,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('Terms', style: Theme.of(context).textTheme.bodyMedium),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  Text('Privacy', style: Theme.of(context).textTheme.bodyMedium),
-                ],
-              )
             ],
           ),
-          const SizedBox(
-            height: 60,
-          ),
-        ],
-      ),
+        ),
+        widget.keyShow ? Container() : Container(color: Colors.black26, height: 600,),
+      ],
     );
   }
 
